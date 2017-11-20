@@ -11,3 +11,10 @@ profiles.clj
 .nrepl-port
 /log
 *.iml
+*.log
+.idea/workspace.xml
+*.log
+*.log
+.idea/workspace.xml
+log/orbis_grcmanager.log
+*.log
