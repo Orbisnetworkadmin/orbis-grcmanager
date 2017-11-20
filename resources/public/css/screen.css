@@ -1,0 +1,216 @@
+html,
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+}
+
+/* ----------------- HOME ----------------- */
+
+.navbar {
+    margin-bottom: 10px;
+    border-radius: 0;
+    /* backgrounds http://www.heropatterns.com/ */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='charlie-brown' fill='%239C92AC' fill-opacity='0.15'%3E%3Cpath d='M9.8 12L0 2.2V.8l10 10 10-10v1.4L10.2 12h-.4zm-4 0L0 6.2V4.8L7.2 12H5.8zm8.4 0L20 6.2V4.8L12.8 12h1.4zM9.8 0l.2.2.2-.2h-.4zm-4 0L10 4.2 14.2 0h-1.4L10 2.8 7.2 0H5.8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.issue-title {
+    cursor: pointer;
+}
+
+.issue-title > h3 {
+    margin: 0px;
+    font-size: 24px;
+}
+
+.issue-title a {
+    color: #2c3e50;
+}
+
+.filters {
+    margin-left: 5px;
+}
+
+.filter-control {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 7px;
+    margin: 2px;
+}
+
+.tag-badge {
+    background-color: green;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 7px;
+    margin: 2px;
+}
+
+
+/* ----------------- SPINNER ----------------- */
+@-moz-keyframes three-quarters-loader {
+    0% {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes three-quarters-loader {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes three-quarters-loader {
+    0% {
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    margin: 100px auto 0;
+    width: 70px;
+    text-align: center;
+}
+
+.spinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: #333;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
+/* ----------------- ISSUES ----------------- */
+.edit-issue-title {
+    font-size: 13pt;
+}
+
+.edit-issue-detail {
+    width: 800px;
+    min-height: 500px;
+}
+
+.rounded-panel {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 0px 20px 0px 20px;
+}
+
+.view-issue-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+code.hljs {
+    border: none;
+    background: none;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+    min-height: 500px;
+}
+
+
+/* ----------------- MISC ----------------- */
+.input-group {
+    width: 100%;
+}
+
+.btn-toolbar {
+    display: inline-block;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.page-title {
+    margin: 10px 0;
+}
+
+.content {
+    padding: 15px 15px 30px 15px;
+}
+.padded-top {
+    margin-top: 10px;
+}
+
+.padded-sides {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.padded-bottom {
+    margin-bottom: 10px;
+}
+
+.issue-detail {
+    width: 100% !important;
+    margin: 0px  !important;
+    margin: 0px !important;
+}
+.editor-view-button {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none!important;
+    color: #888;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.editor-view-button.active {
+    color: #18bc9c;
+}

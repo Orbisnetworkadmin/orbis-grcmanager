@@ -1,0 +1,1 @@
+DROP TABLE risk_register_fase_technique;
