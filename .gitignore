@@ -11,4 +11,20 @@ profiles.clj
 .nrepl-port
 /log
 *.iml
+<<<<<<< HEAD
+.idea/workspace.xml
+=======
+*.log
+.idea/workspace.xml
+*.log
+*.log
+.idea/workspace.xml
+log/orbis_grcmanager.log
+*.log
+.idea/workspace.xml
+log/orbis_grcmanager.log
+*.log
+>>>>>>> 964988d8087af528ecbca1b465bce689e87986c3
+*.xml
+.idea/workspace.xml
 .idea/workspace.xml
