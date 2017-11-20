@@ -1,0 +1,44 @@
+2017-11-02 08:38:22,406 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13h49m17s541ms865µs155ns). 
+2017-11-02 10:56:48,836 [main] INFO  migratus.core - Starting migrations 
+2017-11-02 10:56:49,597 [main] INFO  migratus.core - Running up for [101 102 103 104 105 700 800 10100 10200 10300 10400 10600 10700 10900 11000 11100 11200 11300 20000 20001 20002 20100 20300 20600 20700 20900] 
+2017-11-02 10:56:49,599 [main] INFO  migratus.core - Up 101-object 
+2017-11-02 10:56:50,234 [main] INFO  migratus.core - Up 102-profile 
+2017-11-02 10:56:50,333 [main] INFO  migratus.core - Up 103-password_history 
+2017-11-02 10:56:50,496 [main] INFO  migratus.core - Up 104-users_profile 
+2017-11-02 10:56:50,528 [main] INFO  migratus.core - Up 105-object_profile 
+2017-11-02 10:56:50,565 [main] INFO  migratus.core - Up 700-riskregister 
+2017-11-02 10:56:51,021 [main] INFO  migratus.core - Up 800-logs 
+2017-11-02 10:56:51,236 [main] INFO  migratus.core - Up 10100-activity 
+2017-11-02 10:56:51,574 [main] INFO  migratus.core - Up 10200-stakeholder 
+2017-11-02 10:56:51,970 [main] INFO  migratus.core - Up 10300-campaign 
+2017-11-02 10:56:52,094 [main] INFO  migratus.core - Up 10400-fase 
+2017-11-02 10:56:52,196 [main] INFO  migratus.core - Up 10600-plan 
+2017-11-02 10:56:52,305 [main] INFO  migratus.core - Up 10700-risk 
+2017-11-02 10:56:52,441 [main] INFO  migratus.core - Up 10900-status 
+2017-11-02 10:56:52,514 [main] INFO  migratus.core - Up 11000-technique 
+2017-11-02 10:56:52,808 [main] INFO  migratus.core - Up 11100-treatment 
+2017-11-02 10:56:53,078 [main] INFO  migratus.core - Up 11200-risk_type 
+2017-11-02 10:56:53,166 [main] INFO  migratus.core - Up 11300-control_type 
+2017-11-02 10:56:53,235 [main] INFO  migratus.core - Up 20000-risk_register 
+2017-11-02 10:56:53,307 [main] INFO  migratus.core - Up 20001-risk_register_fase_technique 
+2017-11-02 10:56:53,446 [main] INFO  migratus.core - Up 20002-risk_register_stakeholder 
+2017-11-02 10:56:53,514 [main] INFO  migratus.core - Up 20100-risk_status 
+2017-11-02 10:56:53,622 [main] INFO  migratus.core - Up 20300-risk_subtype 
+2017-11-02 10:56:53,702 [main] INFO  migratus.core - Up 20600-control 
+2017-11-02 10:56:53,798 [main] INFO  migratus.core - Up 20700-control_procedure 
+2017-11-02 10:56:53,843 [main] INFO  migratus.core - Up 20900-attachement 
+2017-11-02 10:56:53,982 [main] INFO  migratus.core - Ending migrations 
+2017-11-02 11:00:05,711 [main] INFO  orbis-grcmanager.env - 
+-=[orbis_grcmanager started successfully using the development profile]=- 
+2017-11-02 11:00:05,889 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2017-11-02 11:00:06,190 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
+2017-11-02 11:00:06,956 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
+2017-11-02 11:00:06,959 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
+2017-11-02 11:00:06,988 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
+2017-11-02 11:00:06,989 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
+2017-11-02 11:00:06,992 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
+2017-11-02 11:00:06,992 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
+2017-11-02 11:00:06,993 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
+2017-11-02 11:00:06,993 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
+2017-11-02 11:00:06,994 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
+2017-11-02 11:01:01,601 [XNIO-1 task-5] INFO  o.routes.services.auth - user: admin successfully logged in from 0:0:0:0:0:0:0:1 localhost 

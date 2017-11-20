@@ -1,0 +1,13 @@
+2017-11-13 16:08:36,714 [main] INFO  orbis-grcmanager.env - 
+-=[orbis_grcmanager started successfully using the development profile]=- 
+2017-11-13 16:08:37,367 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2017-11-13 16:08:37,752 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
+2017-11-13 16:08:38,452 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
+2017-11-13 16:08:38,452 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
+2017-11-13 16:08:38,484 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
