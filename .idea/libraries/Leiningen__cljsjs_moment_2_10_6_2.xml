@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: cljsjs/moment:2.10.6-2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cljsjs/moment/2.10.6-2/moment-2.10.6-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
