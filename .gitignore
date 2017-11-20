@@ -18,3 +18,5 @@ profiles.clj
 .idea/workspace.xml
 log/orbis_grcmanager.log
 *.log
+.idea/workspace.xml
+log/orbis_grcmanager.log
