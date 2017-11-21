@@ -6,7 +6,7 @@
   (:import java.util.Date))
 
 
-; Definición de las estructuras de datos:
+; 1- Definición de las estructuras de datos:
 ; Estas estructura definen los datos y su tipo, posteriormente se incluyen en un contenedor de respuesta
 ; que define la estructura de datos que entregará el servicio (Routes/Services.clj) y con la siguiente estructura:
 ;     :datos (Mapa con Datos/Campos)
@@ -33,24 +33,24 @@
    (s/optional-key :ecd-risk-register)                      s/Num
    (s/optional-key :ece-risk-register)                      s/Num
    (s/optional-key :residual-risk-register)                 s/Num
-   (s/optional-key :startdate-identificacion)               (s/maybe Date)
-   (s/optional-key :enddate-identificacion)                 (s/maybe Date)
+   (s/optional-key :startdate-identificacion)               s/Str
+   (s/optional-key :enddate-identificacion)                 s/Str
    (s/optional-key :technique-identificacion)               s/Str
    (s/optional-key :status-identificacion)                  s/Str
-   (s/optional-key :startdate-analisis)                     (s/maybe Date)
-   (s/optional-key :enddate-analisis)                       (s/maybe Date)
+   (s/optional-key :startdate-analisis)                     s/Str
+   (s/optional-key :enddate-analisis)                       s/Str
    (s/optional-key :technique-analisis)                     s/Str
    (s/optional-key :status-analisis)                        s/Str
-   (s/optional-key :startdate-evaluacion)                   (s/maybe Date)
-   (s/optional-key :enddate-evaluacion)                     (s/maybe Date)
+   (s/optional-key :startdate-evaluacion)                   s/Str
+   (s/optional-key :enddate-evaluacion)                     s/Str
    (s/optional-key :technique-evaluacion)                   s/Str
    (s/optional-key :status-evaluacion)                      s/Str
-   (s/optional-key :startdate-tratamiento)                  (s/maybe Date)
-   (s/optional-key :enddate-tratamiento)                    (s/maybe Date)
+   (s/optional-key :startdate-tratamiento)                  s/Str
+   (s/optional-key :enddate-tratamiento)                    s/Str
    (s/optional-key :technique-tratamiento)                  s/Str
    (s/optional-key :status-tratamiento)                     s/Str
-   (s/optional-key :startdate-monitoreo)                    (s/maybe Date)
-   (s/optional-key :enddate-monitoreo)                      (s/maybe Date)
+   (s/optional-key :startdate-monitoreo)                    s/Str
+   (s/optional-key :enddate-monitoreo)                      s/Str
    (s/optional-key :technique-monitoreo)                    s/Str
    (s/optional-key :status-monitoreo)                       s/Str
    (s/optional-key :kri-risk-register-title)                s/Str
@@ -76,17 +76,39 @@
                 (s/optional-key :current-risk-register)
                 (s/optional-key :ecd-risk-register)
                 (s/optional-key :ece-risk-register)
-                (s/optional-key :residual-risk-register)]))
+                (s/optional-key :residual-risk-register)
+                (s/optional-key :startdate-identificacion)
+                (s/optional-key :enddate-identificacion)
+                (s/optional-key :technique-identificacion)
+                (s/optional-key :status-identificacion)
+                (s/optional-key :startdate-analisis)
+                (s/optional-key :enddate-analisis)
+                (s/optional-key :technique-analisis)
+                (s/optional-key :status-analisis)
+                (s/optional-key :startdate-evaluacion)
+                (s/optional-key :enddate-evaluacion)
+                (s/optional-key :technique-evaluacion)
+                (s/optional-key :status-evaluacion)
+                (s/optional-key :startdate-tratamiento)
+                (s/optional-key :enddate-tratamiento)
+                (s/optional-key :technique-tratamiento)
+                (s/optional-key :status-tratamiento)
+                (s/optional-key :startdate-monitoreo)
+                (s/optional-key :enddate-monitoreo)
+                (s/optional-key :technique-monitoreo)
+                (s/optional-key :status-monitoreo)
+                (s/optional-key :kri-risk-register-title)
+                (s/optional-key :kri-risk-register-descritpion) ]))
 
-; Estructuras contenedoras receptoras del Servicio:
+
+; 2 - Estructuras contenedoras receptoras del Servicio:
 (def RiskRegisterResponse
     {(s/optional-key :riskregister) RiskRegister
      (s/optional-key :error) s/Str})
 
 (def RRSummaryResults
-  {(s/optional-key :riskregister) [RiskRegisters]
+  {(s/optional-key :riskregisters) [RiskRegisters]
    (s/optional-key :error) s/Str})
-
 
 ;(handler tags []
 ;  (ok {:tags (db/ranked-tags)}))
@@ -123,12 +145,12 @@
 ;(handler delete-issue! [m]
 ;  (ok (db/dissoc-from-tags-and-delete-issue-and-files! m)))
 
-; Handlers:
+; 3 - Handlers:
 ; Arman funcion handler con una macro de ayuda (Services/common.clj) handler [fn name, arg y body] que incluye el manejo de errores
 ;en la estructura de datos de respuesta (:error). Algunos handler introducen un mensaje de error personalizado inherente a la consulta.
 
 (handler get-all-riskregisters []
-         (ok {:riskregister (db/riskregisters {})}))
+         (ok {:riskregisters (db/riskregisters {})}))
 
 (handler risk-register-by-id [m]
   (if-let [riskregister (db/riskregister-by-id m)]
