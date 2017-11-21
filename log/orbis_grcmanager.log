@@ -1,32 +1,13 @@
-2017-11-15 14:55:56,076 [main] INFO  orbis-grcmanager.env - 
+2017-11-21 11:44:18,111 [main] INFO  orbis-grcmanager.env - 
 -=[orbis_grcmanager started successfully using the development profile]=- 
-2017-11-15 14:55:57,365 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2017-11-15 14:55:58,160 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
-2017-11-15 14:56:01,614 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
-2017-11-15 14:56:01,617 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
-2017-11-15 14:56:01,648 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
-2017-11-15 14:56:01,649 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
-2017-11-15 14:56:01,649 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
-2017-11-15 14:56:01,650 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
-2017-11-15 14:56:01,651 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
-2017-11-15 14:56:01,651 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
-2017-11-15 14:56:01,652 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
-2017-11-16 08:25:17,546 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11h7m11s932ms673µs309ns). 
-2017-11-16 14:52:08,523 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h35m13s590ms162µs522ns). 
-2017-11-16 20:08:35,487 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h26s700ms751µs914ns). 
-2017-11-17 08:32:10,560 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12h23m56s15ms693µs220ns). 
-2017-11-17 09:31:20,641 [main] INFO  orbis-grcmanager.env - 
--=[orbis_grcmanager started successfully using the development profile]=- 
-2017-11-17 09:31:21,643 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2017-11-17 09:31:21,843 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
-2017-11-17 09:31:22,845 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
-2017-11-17 09:31:22,860 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
-2017-11-17 09:31:22,876 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
-2017-11-17 12:59:53,714 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h28s957ms103µs379ns). 
-2017-11-17 14:23:37,405 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h24m758ms622µs396ns). 
+2017-11-21 11:44:19,297 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2017-11-21 11:44:19,604 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
+2017-11-21 11:44:21,414 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
+2017-11-21 11:44:21,418 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
+2017-11-21 11:44:21,448 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
+2017-11-21 11:44:21,449 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
+2017-11-21 11:44:21,450 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
+2017-11-21 11:44:21,451 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
+2017-11-21 11:44:21,452 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
+2017-11-21 11:44:21,452 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
+2017-11-21 11:44:21,452 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
