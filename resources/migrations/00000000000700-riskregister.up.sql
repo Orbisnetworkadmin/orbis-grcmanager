@@ -1,15 +1,15 @@
 CREATE TABLE riskregister
 (
  id_risk_register                SERIAL NOT NULL PRIMARY KEY,
- id_risk                         VARCHAR(30) NOT NULL,
- id_risk_subtype                 VARCHAR(30) NOT NULL,
- id_campaign                     VARCHAR(30) NOT NULL,
- status_risk_register            VARCHAR(30) NOT NULL,
- owner_risk_register             VARCHAR(30) NOT NULL,
+ id_risk                         VARCHAR(255) NOT NULL,
+ id_risk_subtype                 VARCHAR(255) NOT NULL,
+ id_campaign                     VARCHAR(255) NOT NULL,
+ status_risk_register            VARCHAR(255) NOT NULL,
+ owner_risk_register             VARCHAR(255) NOT NULL,
  description_risk_register       VARCHAR(255) NOT NULL,
  efect_risk_register             VARCHAR(255) NOT NULL,
- location_risk_register          VARCHAR(60) NOT NULL,
- id_treatment                    VARCHAR(30) NOT NULL,
+ location_risk_register          VARCHAR(255) NOT NULL,
+ id_treatment                    VARCHAR(255) NOT NULL,
  key_risk_register               BOOLEAN NOT NULL DEFAULT FALSE,
  likelihood_risk_register        DOUBLE PRECISION,
  impact_risk_register            DOUBLE PRECISION,
@@ -38,7 +38,7 @@ CREATE TABLE riskregister
  enddate_monitoreo               VARCHAR(30),
  technique_monitoreo             VARCHAR(30),
  status_monitoreo                VARCHAR(30),
- kri_risk_register_title         VARCHAR(30),
+ kri_risk_register_title         VARCHAR(255),
  kri_risk_register_descritpion   VARCHAR(255),
  delete_date                     TIME NULL
 );
