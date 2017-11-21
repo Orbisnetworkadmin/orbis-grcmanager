@@ -33,26 +33,26 @@
    (s/optional-key :ecd-risk-register)                      s/Num
    (s/optional-key :ece-risk-register)                      s/Num
    (s/optional-key :residual-risk-register)                 s/Num
-   (s/optional-key :startdate-identificacion)               s/Str
-   (s/optional-key :enddate-identificacion)                 s/Str
-   (s/optional-key :technique-identificacion)               s/Str
-   (s/optional-key :status-identificacion)                  s/Str
-   (s/optional-key :startdate-analisis)                     s/Str
-   (s/optional-key :enddate-analisis)                       s/Str
-   (s/optional-key :technique-analisis)                     s/Str
-   (s/optional-key :status-analisis)                        s/Str
-   (s/optional-key :startdate-evaluacion)                   s/Str
-   (s/optional-key :enddate-evaluacion)                     s/Str
-   (s/optional-key :technique-evaluacion)                   s/Str
-   (s/optional-key :status-evaluacion)                      s/Str
-   (s/optional-key :startdate-tratamiento)                  s/Str
-   (s/optional-key :enddate-tratamiento)                    s/Str
-   (s/optional-key :technique-tratamiento)                  s/Str
-   (s/optional-key :status-tratamiento)                     s/Str
-   (s/optional-key :startdate-monitoreo)                    s/Str
+   (s/optional-key :startdate-identificacion)               (s/maybe s/Str)
+   (s/optional-key :enddate-identificacion)                 (s/maybe s/Str)
+   (s/optional-key :technique-identificacion)               (s/maybe s/Str)
+   (s/optional-key :status-identificacion)                  (s/maybe s/Str)
+   (s/optional-key :startdate-analisis)                     (s/maybe s/Str)
+   (s/optional-key :enddate-analisis)                       (s/maybe s/Str)
+   (s/optional-key :technique-analisis)                     (s/maybe s/Str)
+   (s/optional-key :status-analisis)                        (s/maybe s/Str)
+   (s/optional-key :startdate-evaluacion)                   (s/maybe s/Str)
+   (s/optional-key :enddate-evaluacion)                     (s/maybe s/Str)
+   (s/optional-key :technique-evaluacion)                   (s/maybe s/Str)
+   (s/optional-key :status-evaluacion)                      (s/maybe s/Str)
+   (s/optional-key :startdate-tratamiento)                  (s/maybe s/Str)
+   (s/optional-key :enddate-tratamiento)                    (s/maybe s/Str)
+   (s/optional-key :technique-tratamiento)                  (s/maybe s/Str)
+   (s/optional-key :status-tratamiento)                     (s/maybe s/Str)
+   (s/optional-key :startdate-monitoreo)                    (s/maybe s/Str)
    (s/optional-key :enddate-monitoreo)                      (s/maybe s/Str)
    (s/optional-key :technique-monitoreo)                    (s/maybe s/Str)
-   (s/optional-key :status-monitoreo)                       s/Str
+   (s/optional-key :status-monitoreo)                       (s/maybe s/Str)
    (s/optional-key :kri-risk-register-title)                (s/maybe s/Str)
    (s/optional-key :kri-risk-register-descritpion)          (s/maybe s/Str)})
 
