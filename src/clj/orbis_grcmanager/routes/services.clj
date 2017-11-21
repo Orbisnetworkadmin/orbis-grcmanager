@@ -152,28 +152,28 @@
                     ecd-risk-register              :-   s/Num
                     ece-risk-register              :-   s/Num
                     residual-risk-register         :-   s/Num
-                    startdate-identificacion       :-   (s/maybe Date)
-                    enddate-identificacion         :-   (s/maybe Date)
-                    technique-identificacion       :-   s/Str
-                    status-identificacion          :-   s/Str
-                    startdate-analisis             :-   (s/maybe Date)
-                    enddate-analisis               :-   (s/maybe Date)
-                    technique-analisis             :-   s/Str
-                    status-analisis                :-   s/Str
-                    startdate-evaluacion           :-   (s/maybe Date)
-                    enddate-evaluacion             :-   (s/maybe Date)
-                    technique-evaluacion           :-   s/Str
-                    status-evaluacion              :-   s/Str
-                    startdate-tratamiento          :-   (s/maybe Date)
-                    enddate-tratamiento            :-   (s/maybe Date)
-                    technique-tratamiento          :-   s/Str
-                    status-tratamiento             :-   s/Str
-                    startdate-monitoreo            :-   (s/maybe Date)
-                    enddate-monitoreo              :-   (s/maybe Date)
-                    technique-monitoreo            :-   s/Str
-                    status-monitoreo               :-   s/Str
-                    kri-risk-register-title        :-   s/Str
-                    kri-risk-register-descritpion  :-   s/Str]
+                    startdate-identificacion       :-   (s/maybe s/Str)
+                    enddate-identificacion         :-   (s/maybe s/Str)
+                    technique-identificacion       :-   (s/maybe s/Str)
+                    status-identificacion          :-   (s/maybe s/Str)
+                    startdate-analisis             :-   (s/maybe s/Str)
+                    enddate-analisis               :-   (s/maybe s/Str)
+                    technique-analisis             :-   (s/maybe s/Str)
+                    status-analisis                :-   (s/maybe s/Str)
+                    startdate-evaluacion           :-   (s/maybe s/Str)
+                    enddate-evaluacion             :-   (s/maybe s/Str)
+                    technique-evaluacion           :-   (s/maybe s/Str)
+                    status-evaluacion              :-   (s/maybe s/Str)
+                    startdate-tratamiento          :-   (s/maybe s/Str)
+                    enddate-tratamiento            :-   (s/maybe s/Str)
+                    technique-tratamiento          :-   (s/maybe s/Str)
+                    status-tratamiento             :-   (s/maybe s/Str)
+                    startdate-monitoreo            :-   (s/maybe s/Str)
+                    enddate-monitoreo              :-   (s/maybe s/Str)
+                    technique-monitoreo            :-   (s/maybe s/Str)
+                    status-monitoreo               :-   (s/maybe s/Str)
+                    kri-risk-register-title        :-   (s/maybe s/Str)
+                    kri-risk-register-descritpion  :-   (s/maybe s/Str)]
       :return s/Int
       :summary "adds a new risk register / anade un nuevo registro de riesgo (Risk Register)"
       (riskregister/insert-risk-register!
@@ -237,28 +237,28 @@
                     ecd-risk-register              :-   s/Num
                     ece-risk-register              :-   s/Num
                     residual-risk-register         :-   s/Num
-                    startdate-identificacion       :-   (s/maybe Date)
-                    enddate-identificacion         :-   (s/maybe Date)
-                    technique-identificacion       :-   s/Str
-                    status-identificacion          :-   s/Str
-                    startdate-analisis             :-   (s/maybe Date)
-                    enddate-analisis               :-   (s/maybe Date)
-                    technique-analisis             :-   s/Str
-                    status-analisis                :-   s/Str
-                    startdate-evaluacion           :-   (s/maybe Date)
-                    enddate-evaluacion             :-   (s/maybe Date)
-                    technique-evaluacion           :-   s/Str
-                    status-evaluacion              :-   s/Str
-                    startdate-tratamiento          :-   (s/maybe Date)
-                    enddate-tratamiento            :-   (s/maybe Date)
-                    technique-tratamiento          :-   s/Str
-                    status-tratamiento             :-   s/Str
-                    startdate-monitoreo            :-   (s/maybe Date)
-                    enddate-monitoreo              :-   (s/maybe Date)
-                    technique-monitoreo            :-   s/Str
-                    status-monitoreo               :-   s/Str
-                    kri-risk-register-title        :-   s/Str
-                    kri-risk-register-descritpion  :-   s/Str]
+                    startdate-identificacion       :-   (s/maybe s/Str)
+                    enddate-identificacion         :-   (s/maybe s/Str)
+                    technique-identificacion       :-   (s/maybe s/Str)
+                    status-identificacion          :-   (s/maybe s/Str)
+                    startdate-analisis             :-   (s/maybe s/Str)
+                    enddate-analisis               :-   (s/maybe s/Str)
+                    technique-analisis             :-   (s/maybe s/Str)
+                    status-analisis                :-   (s/maybe s/Str)
+                    startdate-evaluacion           :-   (s/maybe s/Str)
+                    enddate-evaluacion             :-   (s/maybe s/Str)
+                    technique-evaluacion           :-   (s/maybe s/Str)
+                    status-evaluacion              :-   (s/maybe s/Str)
+                    startdate-tratamiento          :-   (s/maybe s/Str)
+                    enddate-tratamiento            :-   (s/maybe s/Str)
+                    technique-tratamiento          :-   (s/maybe s/Str)
+                    status-tratamiento             :-   (s/maybe s/Str)
+                    startdate-monitoreo            :-   (s/maybe s/Str)
+                    enddate-monitoreo              :-   (s/maybe s/Str)
+                    technique-monitoreo            :-   (s/maybe s/Str)
+                    status-monitoreo               :-   (s/maybe s/Str)
+                    kri-risk-register-title        :-   (s/maybe s/Str)
+                    kri-risk-register-descritpion  :-   (s/maybe s/Str)]
       :return s/Int
       :summary "update an existing risk register / actualiza un risk register"
       (riskregister/update-risk-register!
