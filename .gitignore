@@ -29,5 +29,11 @@ log/orbis_grcmanager.log
 .idea/workspace.xml
 .idea/workspace.xml
 *.log
+<<<<<<< HEAD
 *.log
 *.log
+=======
+>>>>>>> 30f49bf9814b3f077ff11fc8dd225f773a4feda7
+src/clj/orbis_grcmanager/routes/services.clj
+log/orbis_grcmanager.log
+log/orbis_grcmanager.log
