@@ -181,6 +181,12 @@
                         :admin      admin
                         :is-active  is-active
                         :pass       pass})))))
+;Funcion para insertar un registro en el riskregister
+
+(defn Insert-risk-register! [riskregister]
+  (conman/with-transaction [*db*]
+                           (insert-riskregister<! riskregister )
+                           ))
 
 ; Logs / Logs
 

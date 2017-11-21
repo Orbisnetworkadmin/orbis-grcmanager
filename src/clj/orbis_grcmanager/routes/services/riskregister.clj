@@ -159,7 +159,7 @@
     (bad-request {:error (str "Riesgo no encontrado : " m)})))
 
 (handler insert-risk-register! [riskregister]
-         (ok (db/insert-riskregister<! riskregister)))
+         (ok (db/Insert-risk-register! riskregister)))
 
 (handler delete-risk-register! [riskregister]
          (ok (db/delete-riskregister! riskregister)))
