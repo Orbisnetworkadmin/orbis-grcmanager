@@ -543,3 +543,16 @@ org.postgresql.util.PSQLException: ERROR: el valor es demasiado largo para el ti
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_144]
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_144]
 	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_144]
+2017-11-21 12:38:01,871 [main] INFO  orbis-grcmanager.env - 
+-=[orbis_grcmanager started successfully using the development profile]=- 
+2017-11-21 12:38:05,041 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2017-11-21 12:38:08,679 [main] INFO  org.xnio - XNIO version 3.3.6.Final 
+2017-11-21 12:38:10,539 [main] INFO  org.projectodd.wunderboss.web.Web - Registered web context / 
+2017-11-21 12:38:10,542 [main] INFO  luminus.repl-server - starting nREPL server on port 7000 
+2017-11-21 12:38:10,569 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.config/env started 
+2017-11-21 12:38:10,569 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.db.core/*db* started 
+2017-11-21 12:38:10,571 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/host started 
+2017-11-21 12:38:10,571 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.routes.services.auth/ldap-pool started 
+2017-11-21 12:38:10,572 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.handler/init-app started 
+2017-11-21 12:38:10,572 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
+2017-11-21 12:38:10,572 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 

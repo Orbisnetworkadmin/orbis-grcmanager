@@ -30,3 +30,5 @@ log/orbis_grcmanager.log
 .idea/workspace.xml
 *.log
 /.gitignore
+*.log
+*.log
