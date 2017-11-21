@@ -182,7 +182,7 @@ VALUES
     :kri-risk-register-title,
     :kri-risk-register-descritpion
 )
-RETURNING id_risk_register;
+
 
 -- :name update-riskregister! :! :n
 -- :doc Updates the Risk Register  / Actualiza el Risk Register

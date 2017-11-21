@@ -174,7 +174,7 @@
                     status-monitoreo               :-   (s/maybe s/Str)
                     kri-risk-register-title        :-   (s/maybe s/Str)
                     kri-risk-register-descritpion  :-   (s/maybe s/Str)]
-      :return s/Int
+
       :summary "adds a new risk register / anade un nuevo registro de riesgo (Risk Register)"
       (riskregister/insert-risk-register!
         { :id-risk                            id-risk
@@ -258,7 +258,7 @@
                     status-monitoreo               :-   (s/maybe s/Str)
                     kri-risk-register-title        :-   (s/maybe s/Str)
                     kri-risk-register-descritpion  :-   (s/maybe s/Str)]
-      :return s/Int
+
       :summary "update an existing risk register / actualiza un risk register"
       (riskregister/update-risk-register!
         {:id-risk-register                   id-risk-register
