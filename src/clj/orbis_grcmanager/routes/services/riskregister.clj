@@ -56,6 +56,7 @@
    (s/optional-key :kri-risk-register-title)                (s/maybe s/Str)
    (s/optional-key :kri-risk-register-descritpion)          (s/maybe s/Str)})
 
+
 ; Estructura para un set de registros de Risk Registers Arreglo de Mapas [{}]
 (def RiskRegisters
   (select-keys RiskRegister
