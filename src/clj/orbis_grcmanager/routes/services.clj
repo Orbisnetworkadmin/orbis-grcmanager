@@ -215,7 +215,7 @@
           :status-monitoreo                   status-monitoreo
           :kri-risk-register-title            kri-risk-register-title
           :kri-risk-register-descritpion      kri-risk-register-descritpion  }))
-    
+
     (PUT "/riskregister" []
       :body-params [id-risk-register               :-   s/Int
                     id-risk                        :-   s/Str
