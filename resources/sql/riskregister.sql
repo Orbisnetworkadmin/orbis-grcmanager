@@ -181,7 +181,7 @@ VALUES
     :status-monitoreo,
     :kri-risk-register-title,
     :kri-risk-register-descritpion
-)
+ )RETURNING id_risk_register;
 
 
 -- :name update-riskregister! :! :n
