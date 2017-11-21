@@ -557,3 +557,4 @@ org.postgresql.util.PSQLException: ERROR: el valor es demasiado largo para el ti
 2017-11-21 12:50:21,001 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/http-server started 
 2017-11-21 12:50:21,001 [main] INFO  orbis-grcmanager.core - #'orbis-grcmanager.core/repl-server started 
 2017-11-21 12:53:12,923 [XNIO-1 task-11] INFO  o.routes.services.auth - user: admin successfully logged in from 0:0:0:0:0:0:0:1 localhost 
+2017-11-21 14:33:24,127 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=27m29s310ms346µs373ns). 
