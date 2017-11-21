@@ -6,9 +6,6 @@
             [accountant.core :as accountant])
   (:import goog.History))
 
-
-
-
 (defn logged-in? []
   @(subscribe [:user]))
 
