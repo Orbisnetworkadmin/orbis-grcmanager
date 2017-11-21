@@ -32,4 +32,11 @@ log/orbis_grcmanager.log
 /.gitignore
 *.log
 *.log
+<<<<<<< HEAD
 *.log
+=======
+<<<<<<< HEAD
+*.log
+=======
+>>>>>>> 273a5ae31e0b3f5bb1853e874b570aaa54625e87
+>>>>>>> 158c59dbeaf8e1439e8af83194adf54ef94e29e7
