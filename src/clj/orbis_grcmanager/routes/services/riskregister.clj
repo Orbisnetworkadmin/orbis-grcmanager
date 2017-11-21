@@ -50,11 +50,11 @@
    (s/optional-key :technique-tratamiento)                  s/Str
    (s/optional-key :status-tratamiento)                     s/Str
    (s/optional-key :startdate-monitoreo)                    s/Str
-   (s/optional-key :enddate-monitoreo)                      s/Str
-   (s/optional-key :technique-monitoreo)                    s/Str
+   (s/optional-key :enddate-monitoreo)                      (s/maybe s/Str)
+   (s/optional-key :technique-monitoreo)                    (s/maybe s/Str)
    (s/optional-key :status-monitoreo)                       s/Str
-   (s/optional-key :kri-risk-register-title)                s/Str
-   (s/optional-key :kri-risk-register-descritpion)          s/Str})
+   (s/optional-key :kri-risk-register-title)                (s/maybe s/Str)
+   (s/optional-key :kri-risk-register-descritpion)          (s/maybe s/Str)})
 
 ; Estructura para un set de registros de Risk Registers Arreglo de Mapas [{}]
 (def RiskRegisters
