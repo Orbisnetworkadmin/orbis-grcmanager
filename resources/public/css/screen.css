@@ -4,6 +4,38 @@ body {
     height: 100%;
 }
 
+/* ----------------- RE-FRAME DATATABLE ----------------- */
+table.re-frame-datatable > thead th.sorted-by:after {
+    display: inline-block;
+    content: url(sort_neutral.png);
+
+}
+
+table.re-frame-datatable > thead th.sorted-by.asc:after {
+    content: url(sort_up.png);
+}
+
+table.re-frame-datatable > thead th.sorted-by.desc:after {
+    content: url(sort_down.png);
+
+}
+
+
+table.re-frame-datatable > thead th:after {
+    display: none;
+    font-family: Icons;
+    margin-left: .5em;
+}
+
+.ui.section {
+    margin-bottom: 2.5em;
+}
+
+.inline-code {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+}
+
 /* ----------------- HOME ----------------- */
 
 .navbar {

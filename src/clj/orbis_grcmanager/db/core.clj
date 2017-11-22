@@ -183,7 +183,7 @@
                         :pass       pass})))))
 ;Funcion para insertar un registro en el riskregister
 
-(defn Insert-risk-register! [riskregister]
+(defn insertar-risk-register! [riskregister]
   (conman/with-transaction [*db*]
                            (insert-riskregister<! riskregister )
                            ))

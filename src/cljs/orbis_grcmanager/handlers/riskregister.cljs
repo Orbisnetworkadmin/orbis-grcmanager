@@ -1,12 +1,9 @@
-(ns orbis-grcmanager.handlers
-  (:require [re-frame.core :refer [dispatch dispatch-sync reg-event-db reg-event-fx]]
-            [ajax.core :refer [DELETE GET POST PUT]]
-            [orbis-grcmanager.db :as db]
-            orbis-grcmanager.handlers.admin
-            orbis-grcmanager.handlers.issues
-            orbis-grcmanager.handlers.tags
-            orbis-grcmanager.handlers.riskregister))
-
+(ns orbis-grcmanager.handlers.riskregister
+  (:require [orbis-grcmanager.attachments :refer [upload-file!]]
+            [re-frame.core :refer [dispatch dispatch-sync reg-event-db reg-event-fx]]
+            [orbis-grcmanager.routes :refer [navigate!]]
+            [orbis-grcmanager.ajax :refer [ajax-error]]
+            [ajax.core :refer [DELETE GET POST PUT]]))
 
 ; 1 - Creación de la Base de Datos de eventos de Re-Frame:
 ; La creación de la base de datos genera una llave dentro de la Base de Datos general
@@ -33,16 +30,27 @@
 ; como :require ; en el namespace handlers.cljs:
 ;(:require mi-aplicacion.handlers.mi-handler)
 
+; Base de datos para varios Risk Registers
+(reg-event-db
+  :set-risk-registers
+  (fn [db [_ risk-registers]]
+    (assoc db :risk-registers risk-registers)))
 
 (reg-event-db
-  :initialize-db
-  (fn [_ _]
-    db/default-db))
+  :close-risk-registers
+  (fn [db _]
+    (dissoc db :risk-registers)))
+
+; Base de datos para el Detalle de Risk Register (Individual)
+(reg-event-db
+  :set-risk-register
+  (fn [db [_ risk-register]]
+    (assoc db :risk-register risk-register)))
 
 (reg-event-db
-  :set-active-page
-  (fn [db [_ page]]
-    (assoc db :active-page page)))
+  :close-risk-register
+  (fn [db _]
+    (dissoc db :risk-register)))
 
 
 ; 2 - Definición de los eventos de Re-Frame:
@@ -71,47 +79,29 @@
 ;          :error-handler #(ajax-error %)})
 ;    nil))
 
+
+; Eventos para varios Risk Registers
+
 (reg-event-fx
-  :run-login-events
-  (fn [{:keys [db]} _]
-    (doseq [event (:login-events db)]
-      (dispatch event))))
+  :load-risk-register-sumary
+  (fn [_ _]
+    (GET "/api/riskregisters"
+         {:handler       #(do
+                            (dispatch [:set-risk-registers (:Riskregisters %)])
+                            (dispatch [:set-active-page :risk-register-sumary])
+                            )
 
+          :error-handler #(ajax-error %)})
+    nil))
+
+
+; Eventos para el Detalle de Risk Register (Individual)
 (reg-event-db
-  :add-login-event
-  (fn [db [_ event]]
-    (update db :login-events conj event)))
-
-(reg-event-db
-  :login
-  (fn [db [_ user]]
-    (dispatch [:run-login-events])
-    (assoc db :user user)))
-
-(reg-event-db
-  :logout
-  (fn [db _]
-    (dissoc db :user)))
-
-(reg-event-db
-  :set-error
-  (fn [db [_ error]]
-    (assoc db :error error)))
-
-(reg-event-db
-  :clear-error
-  (fn [db _]
-    (dissoc db :error)))
-
-(reg-event-db
-  :unset-loading
-  (fn [db _]
-    (dissoc db :loading? :error)))
-
-(reg-event-db
-  :set-loading
-  (fn [db _]
-    (assoc db :loading? true
-              :error false)))
-
-
+  :load-risk-register-by-id
+  (fn [db [_ id-risk-register]]
+    (GET (str "/api/riskregister/" id-risk-register)
+         {:handler       #(do
+                            (dispatch-sync [:set-riskregister (:Riskregister %)])
+                            (dispatch [:set-active-page :risk-register-by-id]))
+          :error-handler #(ajax-error %)})
+    (dissoc db :Riskregister)))

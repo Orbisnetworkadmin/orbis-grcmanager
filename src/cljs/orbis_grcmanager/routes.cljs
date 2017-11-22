@@ -85,6 +85,10 @@
 
 (secretary/defroute (context-url "/users") []
   (run-events [[:set-active-page :users]]))
+
+;Risk Register
+(secretary/defroute (context-url "/riskregister") []
+                    (dispatch [:load-risk-register-sumary]))
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined

@@ -7,7 +7,8 @@
             [orbis-grcmanager.pages.admin.users :refer [users-page]]
             [orbis-grcmanager.pages.home :refer [home-page]]
             [orbis-grcmanager.pages.issues :refer [edit-issue-page view-issue-page]]
-            [orbis-grcmanager.pages.auth :refer [login-page logout]]))
+            [orbis-grcmanager.pages.auth :refer [login-page logout]]
+            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page]]))
 
 
 ; 5 - Incluir la(s) página(s) asociada(s) en el entorno SPA:
@@ -65,7 +66,10 @@
   (.scrollTo js/window 0 0)
   [view-issue-page])
 (defmethod pages :default [_ _] [:div])
-
+; Risk Register:
+(defmethod pages :risk-register-sumary [_ _]
+  (.scrollTo js/window 0 0)
+  [risk-register-sumary-page])
 
 ; 5B - Lo expuesto en 5A permitirá que al renderizar la función [main-page] se incluya
 ; nuestra página dinamicammente invocada como parámetro en el metodo pages y en

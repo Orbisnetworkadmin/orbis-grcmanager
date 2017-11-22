@@ -42,3 +42,7 @@
 ;;admin
 (reg-sub :admin/users query)
 
+; Risk Registers
+(reg-sub :risk-registers query)
+(reg-sub :risk-register query)
+

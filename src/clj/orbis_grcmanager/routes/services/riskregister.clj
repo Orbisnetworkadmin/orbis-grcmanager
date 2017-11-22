@@ -104,11 +104,11 @@
 
 ; 2 - Estructuras contenedoras receptoras del Servicio:
 (def RiskRegisterResponse
-    {(s/optional-key :riskregister) RiskRegister
+    {(s/optional-key :Riskregister) RiskRegister
      (s/optional-key :error) s/Str})
 
 (def RRSummaryResults
-  {(s/optional-key :riskregisters) [RiskRegisters]
+  {(s/optional-key :Riskregisters) [RiskRegisters]
    (s/optional-key :error) s/Str})
 
 ;(handler tags []
@@ -151,15 +151,15 @@
 ;en la estructura de datos de respuesta (:error). Algunos handler introducen un mensaje de error personalizado inherente a la consulta.
 
 (handler get-all-riskregisters []
-         (ok {:riskregisters (db/riskregisters {})}))
+         (ok {:Riskregisters (db/riskregisters {})}))
 
 (handler risk-register-by-id [m]
   (if-let [riskregister (db/riskregister-by-id m)]
-    (ok {:riskregister riskregister})
+    (ok {:Riskregister riskregister})
     (bad-request {:error (str "Riesgo no encontrado : " m)})))
 
 (handler insert-risk-register! [riskregister]
-         (ok (db/Insert-risk-register! riskregister)))
+         (ok (db/insertar-risk-register! riskregister)))
 
 (handler delete-risk-register! [riskregister]
          (ok (db/delete-riskregister! riskregister)))
