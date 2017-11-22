@@ -147,7 +147,7 @@
 ;  (ok (db/dissoc-from-tags-and-delete-issue-and-files! m)))
 
 ; 3 - Handlers:
-; Arman funcion handler con una macro de ayuda (Services/common.clj) handler [fn name, arg y body] que incluye el manejo de errores
+; Arman función handler con una macro de ayuda (Services/common.clj) handler [fn name, arg y body] que incluye el manejo de errores
 ;en la estructura de datos de respuesta (:error). Algunos handler introducen un mensaje de error personalizado inherente a la consulta.
 
 (handler get-all-riskregisters []

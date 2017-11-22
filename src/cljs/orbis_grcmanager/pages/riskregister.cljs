@@ -14,6 +14,11 @@
             [re-com.core
              :refer [box v-box h-split v-split title flex-child-style input-text input-textarea]]))
 
+; Funciones / Componentes General:
+
+
+
+
 (defn nuevo-registro []
   [:a.btn.btn-sm.btn-success.pull-right
    (href "/create-rr") "Nuevo registro"])
@@ -22,8 +27,16 @@
   [:a.btn.btn-sm.btn-success.pull-right
    (href "/edit-rr") "Editar registro"])
 
+; Fin Funciones / Componentes General------------------------------------------------------------------------------------------------------------------
 
 
+
+
+
+
+; ---------------------------------------------------------------------------------------------------------------------
+; Risk Register Details Edit-Insert-Update
+; Selecciona Keys a ser evaluados
 (defn select-rr-keys [rr]
   (let [rr-keys [:id-risk
                  id-risk-subtype
@@ -44,7 +57,7 @@
                  ]]
     ))
 
-
+; Crea un estandard para los campos de un formulario
 (defn field-group [label cursor type placeholder]
   [bs/FormGroup
    [bs/ControlLabel
@@ -57,19 +70,21 @@
       :on-change   #(reset! cursor (-> % .-target .-value))
       :placeholder placeholder}]]])
 
-
-
+; Verifica que el atomo local no este vacio
 (defn rr-empty? [rr]
   (->> rr
        (keep #(-> % second not-empty))
        (empty?)))
 
+; Verifica que el atomo tenga la información actualizada
 (defn rr-updated? [original-rr edited-rr]
   (if (:id-risk-register edited-rr)
     (not= (select-rr-keys original-rr)
           (select-rr-keys edited-rr))
     (not (rr-empty? edited-rr))))
-
+; Componentes:
+; Botones:
+; Salvar y Cancelar
 (defn control-buttons [original-rr edited-rr]
   (r/with-let [rr-id      (:id-risk-register @edited-rr)
                errors        (r/atom nil)
@@ -99,8 +114,88 @@
                                    (dispatch [:create-issue @edited-rr])))}
                  "Save"]]]))
 
-; Define la función de renderización de la tabla re-frame. Se incluyen:
+; Página:
 
+(defn edit-rr-page []
+
+
+  (r/with-let [ estado1 (r/atom false)
+               estado2 (r/atom false)
+               estado3 (r/atom false)
+               estado4 (r/atom false)
+               estado5 (r/atom false)
+               original-rr  (subscribe [:riskregister])
+               edited-rr   (-> @original-rr
+                               (update :description-risk-register #(or % ""))
+                               (update :location-risk-register #(or % ""))
+                               (update :likelihood-risk-register #(or % ""))
+                               (update :impact-risk-register #(or % ""))
+                               r/atom)
+
+               descripcion          (r/cursor edited-rr [:description-risk-register])
+               ubicacion       (r/cursor edited-rr [:location-risk-register])
+               probabilidad        (r/cursor edited-rr [:likelihood-risk-register])
+               impacto           (r/cursor edited-rr [:impact-risk-register])
+
+
+               ]
+              [v-box
+               :size "auto"
+               :gap "10px"
+               :height "auto"
+               :children
+               [[:div.row
+                 [:div.col-sm-6
+                  [:h3.page-title (if @original-rr "Edicion del registro" "Nuevo registro")]]
+                 [:div.col-sm-6
+                  [control-buttons original-rr edited-rr]]]
+                [bs/FormGroup
+                 [bs/ControlLabel "Descripcion del riesgo"]
+                 [input-text
+                  :model descripcion
+                  :width "100%"
+                  :class "edit-issue-title"
+                  :placeholder "Nombre que describe el riesgo"
+                  :on-change #(reset! descripcion %)]]
+                [bs/FormGroup
+                 [bs/ControlLabel "Ubicacion del riesgo"]
+                 [input-text
+                  :model ubicacion
+                  :width "100%"
+                  :placeholder "Nombra la ubicacion del riesgo"
+                  :on-change #(reset! ubicacion %)]]
+                [field-group
+                 "Probabilidad"
+                 probabilidad
+                 :text "Confirm the password for the user"]
+                [:div.col-sm-6
+                 [:br][:div.row [:div.col-sm-12 [bs/Button
+                                                 {:bs-style "link"
+                                                  :on-click #(swap! estado1 not)}
+                                                 "Identifiacion"
+                                                 ]]]
+
+
+                 [bs/Collapse {:in @estado1 } [:div.row [:div.panel.panel-default [:h1.risk-title "tetas"]]]  ]
+                 [control-buttons original-rr edited-rr]]]]
+
+
+
+              )
+
+
+  )
+; Fin Risk Register Detail Edit-Insert-Update--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+; ---------------------------------------------------------------------------------------------------------------------
+; Risk Register Sumary
+
+; Funciones:
+; Define la función de renderización de la tabla re-frame. Se incluyen:
 ;;:NombreDeLaTabla
 ;[:mi-subscripción-re-frame]
 ;[{::dt/column-key   [:columna-1-llave-reframe]
@@ -148,8 +243,6 @@
     ::dt/table-classes [ "table-striped" "table-bordered" "table-hover" "table"]}]
   )
 
-
-
 ; Se hace la referencia al ns views de la librería, para funciones de visualización paginación y selección de página.
 ;Risk Register:
 (defn control-paginacion []
@@ -160,9 +253,25 @@
   )
 
 
+; Páginas:
+(defn risk-register-sumary-page []
+  (r/with-let [atomo-risk-registers-local   (subscribe [:risk-registers])]
+              [:div.row
+               [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]]]
+              ))
+
+
+; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 
 
 
+
+
+; ---------------------------------------------------------------------------------------------------------------------
+; Risk Register Detail
+; Define la función de renderización de la tabla re-frame. Se incluyen:
+
+;Pagina:
 (defn riskregister-by-id-page []
   (r/with-let [rr     (subscribe [:riskregister])
                estado1 (r/atom false)
@@ -275,108 +384,5 @@
 
               ))
 
+; Fin Risk Register Detail---------------------------------------------------------------------------------------------------------
 
-(defn edit-rr-page []
-
-
-  (r/with-let [ estado1 (r/atom false)
-               estado2 (r/atom false)
-               estado3 (r/atom false)
-               estado4 (r/atom false)
-               estado5 (r/atom false)
-               original-rr  (subscribe [:riskregister])
-               edited-rr   (-> @original-rr
-                               (update :description-risk-register #(or % ""))
-                               (update :location-risk-register #(or % ""))
-                               (update :likelihood-risk-register #(or % ""))
-                               (update :impact-risk-register #(or % ""))
-                               r/atom)
-
-               descripcion          (r/cursor edited-rr [:description-risk-register])
-               ubicacion       (r/cursor edited-rr [:location-risk-register])
-               probabilidad        (r/cursor edited-rr [:likelihood-risk-register])
-               impacto           (r/cursor edited-rr [:impact-risk-register])
-
-
-               ]
-              [v-box
-               :size "auto"
-               :gap "10px"
-               :height "auto"
-               :children
-               [[:div.row
-                 [:div.col-sm-6
-                  [:h3.page-title (if @original-rr "Edicion del registro" "Nuevo registro")]]
-                 [:div.col-sm-6
-                  [control-buttons original-rr edited-rr]]]
-                [bs/FormGroup
-                 [bs/ControlLabel "Descripcion del riesgo"]
-                 [input-text
-                  :model descripcion
-                  :width "100%"
-                  :class "edit-issue-title"
-                  :placeholder "Nombre que describe el riesgo"
-                  :on-change #(reset! descripcion %)]]
-                [bs/FormGroup
-                 [bs/ControlLabel "Ubicacion del riesgo"]
-                 [input-text
-                  :model ubicacion
-                  :width "100%"
-                  :placeholder "Nombra la ubicacion del riesgo"
-                  :on-change #(reset! ubicacion %)]]
-                [field-group
-                 "Probabilidad"
-                 probabilidad
-                 :text "Confirm the password for the user"]
-                [:div.col-sm-6
-                 [:br][:div.row [:div.col-sm-12 [bs/Button
-                                                 {:bs-style "link"
-                                                  :on-click #(swap! estado1 not)}
-                                                 "Identifiacion"
-                                                 ]]]
-
-
-                 [bs/Collapse {:in @estado1 } [:div.row [:div.panel.panel-default [:h1.risk-title "tetas"]]]  ]
-                 [control-buttons original-rr edited-rr]]]]
-
-
-
-              )
-
-
-  )
-
-
-(defn risk-register-sumary-page []
-  (r/with-let [atomo-risk-registers-local   (subscribe [:risk-registers])]
-              [:div.row
-               [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]]]
-
-
-              ;esta es la del indu que hace busqueda
-              ;[:div.container [:div.rounded-panel
-              ;
-              ;                 [:br]
-              ;                 [rdt/data-table
-              ;                  {:table-id              "snazzy-table"
-              ;                   :sf-input-id           "search-field"
-              ;                   :headers               [[:description-risk-register "Descripción"] [:location-risk-register "Localización"] [:residual-risk-register "Valor del riesgo residual"] [:inherent-risk-register "Valor del riesgo inherente"] [:id-risk-register "Identificador del registro"]]
-              ;                   :rows                   @rrs
-              ;                   :td-render-fn          (fn [row col-id]
-              ;                                            (cond (= :description-risk-register col-id)
-              ;                                                  [:td [:a {:href (str "/riskregister/" (:id-risk-register row))} (get row col-id)]]
-              ;                                                  :else (if (empty? (str (get row col-id)))
-              ;                                                          [:td {:style {:background :gold :display :block}} "~~unknowable~~"]
-              ;                                                          (get row col-id))))
-              ;
-              ;                   :filterable-columns    [:description-risk-register :location-risk-register :residual-risk-register :inherent-risk-register :id-risk-register]
-              ;                   :filter-label          "Busqueda en campos:"
-              ;                   :sortable-columns      [:description-risk-register :location-risk-register :residual-risk-register :inherent-risk-register :id-risk-register]
-              ;                   :sort-columns          [[:id-risk-register false]]
-              ;                   }]
-              ;
-              ;                 ] [:br ] [nuevo-registro]]
-
-
-
-              ))
