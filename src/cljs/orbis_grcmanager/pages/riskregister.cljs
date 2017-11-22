@@ -206,16 +206,21 @@
   [dt/datatable
    :RegistrodeRiesgos
    [:risk-registers]
-   [{::dt/column-key   [:id-risk]
+   [{::dt/column-key   [:id-risk-register]
+     ::dt/sorting      {::dt/enabled? false}
+     ::dt/column-label "ID"}
+
+    {::dt/column-key   [:id-risk]
      ::dt/sorting      {::dt/enabled? false}
      ::dt/column-label "Riesgo"}
 
-    {::dt/column-key   [:id-risk-subtype]
+     {::dt/column-key   [:id-risk-subtype]
      ::dt/column-label "Tipo"}
 
     {::dt/column-key   [:description-risk-register]
      ::dt/column-label "Descripción"
-     ::dt/sorting      {::dt/enabled? false}}
+     ::dt/sorting      {::dt/enabled? false}
+     ::dt/render-fn    formato-columna-href}
 
     {::dt/column-key   [:owner-risk-register]
       ::dt/column-label "Propietario"
@@ -240,8 +245,12 @@
      ]
    {::dt/pagination    {::dt/enabled? true
                         ::dt/per-page 10}
-    ::dt/table-classes [ "table-striped" "table-bordered" "table-hover" "table"]}]
+    ::dt/table-classes [ "table-striped" "table-bordered" "table-hover" "table"],
+    ::dt/selection {::dt/enabled? true}}]
   )
+
+
+
 
 ; Se hace la referencia al ns views de la librería, para funciones de visualización paginación y selección de página.
 ;Risk Register:
@@ -252,12 +261,25 @@
   [views/per-page-selector :RegistrodeRiesgos [:risk-registers]]
   )
 
+(defn formato-columna-href [description risk-register]
+  [:a {:href (str "/riskregister/" (get-in risk-register [:id-risk-register]))}
+   description]
+  )
+
+(defn selected-rows-preview []
+  [:pre
+   [:code
+    @(subscribe [::dt/selected-items
+                          :RegistrodeRiesgos
+                          [:risk-registers]])]])
+
 
 ; Páginas:
 (defn risk-register-sumary-page []
   (r/with-let [atomo-risk-registers-local   (subscribe [:risk-registers])]
               [:div.row
                [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]]]
+
               ))
 
 
