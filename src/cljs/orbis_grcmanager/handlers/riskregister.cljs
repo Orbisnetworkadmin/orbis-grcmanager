@@ -101,7 +101,7 @@
   (fn [db [_ id-risk-register]]
     (GET (str "/api/riskregister/" id-risk-register)
          {:handler       #(do
-                            (dispatch-sync [:set-riskregister (:Riskregister %)])
-                            (dispatch [:set-active-page :risk-register-by-id]))
+                            (dispatch-sync [:set-risk-register (:Riskregister %)])
+                            (dispatch [:set-active-page :risk-register-detail]))
           :error-handler #(ajax-error %)})
     (dissoc db :Riskregister)))

@@ -355,39 +355,43 @@
 ; Define la función de renderización de la tabla re-frame. Se incluyen:
 
 ;Pagina:
-(defn riskregister-by-id-page []
-  (r/with-let [rr     (subscribe [:riskregister])
+(defn risk-register-datail-page []
+  (r/with-let [rr     (subscribe [:risk-register])
                estado1 (r/atom false)
                estado2 (r/atom false)
                estado3 (r/atom false)
                estado4 (r/atom false)
-               estado5 (r/atom false)]
+               estado5 (r/atom false)
+               ]
 
               [:div.container
+               [:div.rounded-panel
                [:div.row
                 [:div.col-sm-12 [:h3.risk-title  "Detalle de riesgo"]]]
                [:div.row
-                [:div.panel.panel-default
                  [:div.col-sm-4
                   [:h4 (:description-risk-register @rr)]
-                  [:label "Localización del riego: "] (:location-risk-register @rr)
-                  [:br]
-                  [:label "Probabilidad: "] (:likelihood-risk-register @rr)
-                  [:br]
-                  [:label "Impacto: "] (:impact-risk-register @rr)
-                  [:br]
+                  [:label "Riesgo: "] [:p (:id-risk @rr)]
+                  [:label "Tipo: "] [:p (:id-risk-subtype @rr)]
+                  [:label "Localización del riego: "] [:p (:location-risk-register @rr)]
+
+
                   [bs/Checkbox
                    {:checked   (boolean (:keyrisk-risk-register @rr))}
                    "Reisgo Clave"] ]
                  [:div.col-sm-4
                   [:br]
-                  [:br]
-                  [:ul
-                   [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                   [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                   [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                   ]
-                  ] [:div.col-sm-4 [:br] [:br] [:span.pull-right [bs/Badge (:id-risk-register @rr)]]]
+                  [:label "Propietario: "][:p (:owner-risk-register @rr)]
+                  [:label "Campaña: "][:p (:id-campaign @rr)]
+                  [:label "Estatus: "][:h3 (:status-risk-register @rr)]
+
+
+                  ] [:div.col-sm-4 [:br] [:br] [:span.pull-right [bs/Badge (:id-risk-register @rr)]
+                                                   ][:ul
+                                                               [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
+                                                               [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
+                                                               [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
+                                                               ] [:label "Tratamiento: "][:h3 (:id-treatment @rr)]]
                  ] ]
                [:br] [:div.row [:div.col-sm-12 [:div.btn-toolbar.pull-right  [editar-registro] ]]]
                [:br][:div.row [:div.col-sm-12 [bs/Button
@@ -397,12 +401,17 @@
                                                ]]]
 
 
-               [bs/Collapse {:in @estado1 } [:div.row [:div.panel.panel-default
-                                                       [:ul
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                        ]]]  ]
+               [bs/Collapse {:in @estado1 } [:div.rounded-panel
+                                             [:div.row
+                                              [:div.col-sm-6
+                                               [:label "Técnica : "] [:p (:technique-identificacion @rr)]
+                                               [:label "Estatus: "] [:p (:status-identificacion @rr) ]]
+                                             [:div.col-sm-6
+                                              [:label "Fecha de inicio: "] [:p (:startdate-identificacion @rr)]
+                                              [:label "Fecha de finalización: "] [:p (:enddate-identificacion @rr) ]
+
+                                              ]
+                                                                ]]]
 
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
@@ -411,12 +420,23 @@
                                                ]]]
 
 
-               [bs/Collapse {:in @estado2 } [:div.row [:div.panel.panel-default
-                                                       [:ul
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                        ]]]  ]
+               [bs/Collapse {:in @estado2 } [:div.rounded-panel
+                                             [:div.row
+                                              [:div.col-sm-4
+                                               [:label "Efecto: "] [:p (:efect-risk-register @rr) ]
+                                               [:label "Probabilidad: "] [:p (:likelihood-risk-register @rr)]
+                                               [:label "Impacto: "] [:p (:impact-risk-register @rr) ]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Técnica : "] [:p (:technique-analisis @rr)]
+                                               [:label "Estatus: "] [:p (:status-analisis @rr) ]
+                                               [:label "Localización del riego: "] [:p (:location-risk-register @rr) ]
+                                               ] [:div.col-sm-4
+                                                      [:label "Fecha de inicio: "] [:p (:startdate-analisis @rr)]
+                                                       [:label "Fecha de finalización: "] [:p (:enddate-analisis @rr) ]
+                                                                                                ]
+                                              ]]
+                ]
 
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
@@ -425,12 +445,25 @@
                                                ]]]
 
 
-               [bs/Collapse {:in @estado3 } [:div.row [:div.panel.panel-default
-                                                       [:ul
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                        ]]]  ]
+               [bs/Collapse {:in @estado3 } [:div.rounded-panel
+                                             [:div.row
+                                              [:div.col-sm-4
+                                               [:label "Valor del riesgo inherente: "] [:p (:inherent-risk-register @rr) ]
+                                               [:label "Eficiencia controles existentes(ECE): "] [:p (:ece-risk-register @rr)]
+                                               [:label "Valor del riego continuo: "] [:p (:current-risk-register @rr) ]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Técnica : "] [:p (:technique-evaluacion @rr)]
+                                               [:label "Estatus: "] [:p (:status-evaluacion @rr) ]
+                                               [bs/Checkbox
+                                                {:checked   (boolean (:keyrisk-risk-register @rr))}
+                                                "Reisgo Clave"]
+                                               ]
+                                              [:div.col-sm-4
+                                                  [:label "Fecha de inicio: "] [:p (:startdate-evaluacion @rr)]
+                                                  [:label "Fecha de finalización: "] [:p (:enddate-evaluacion @rr) ]
+                                                  ]
+                                              ]]  ]
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
                                                 :on-click #(swap! estado4 not)}
@@ -438,12 +471,23 @@
                                                ]]]
 
 
-               [bs/Collapse {:in @estado4 } [:div.row [:div.panel.panel-default
-                                                       [:ul
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                        ]]]  ]
+               [bs/Collapse {:in @estado4 } [:div.rounded-panel
+                                             [:div.row
+                                              [:div.col-sm-4
+                                               [:label "Tratamiento: "][:h4 (:id-treatment @rr)]
+                                               [:label "Eficiencia controles diseñado(ECD): "] [:p (:ecd-risk-register @rr)]
+                                               [:label "Valor del riego residual: "] [:p (:residual-risk-register @rr) ]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Técnica : "] [:p (:technique-tratamiento @rr)]
+                                               [:label "Estatus: "] [:p (:status-tratamiento @rr) ]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Fecha de inicio: "] [:p (:startdate-tratamiento @rr)]
+                                               [:label "Fecha de finalización: "] [:p (:enddate-tratamiento @rr) ]
+                                               ]
+                                              ]]  ]
+
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
                                                 :on-click #(swap! estado5 not)}
@@ -451,12 +495,21 @@
                                                ]]]
 
 
-               [bs/Collapse {:in @estado5 } [:div.row [:div.panel.panel-default
-                                                       [:ul
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                        [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                        ]]]  ]
+               [bs/Collapse {:in @estado5 } [:div.rounded-panel
+                                             [:div.row
+                                              [:div.col-sm-4
+                                               [:label "Key risk indicator : "][:p (:kri-risk-register-title @rr)]
+                                               [:label "Descripción: "] [:p (:kri-risk-register-descritpion @rr)]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Técnica : "] [:p (:technique-monitoreo @rr)]
+                                               [:label "Estatus: "] [:p (:status-monitoreo @rr) ]
+                                               ]
+                                              [:div.col-sm-4
+                                               [:label "Fecha de inicio: "] [:p (:startdate-monitoreo @rr)]
+                                               [:label "Fecha de finalización: "] [:p (:enddate-monitoreo @rr) ]
+                                               ]
+                                              ]]  ]
                [:div.btn-toolbar.pull-right   [editar-registro] ] ]
 
 
