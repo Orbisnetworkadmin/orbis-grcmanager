@@ -29,7 +29,7 @@
    [bs/Navbar.Header]
    [bs/Navbar.Brand
     [:a#logo (href "/")
-     [:span "Seguimientos"]]]
+     [:span "Planes"]]]
    [bs/Navbar.Collapse
     (when admin
       [bs/Nav

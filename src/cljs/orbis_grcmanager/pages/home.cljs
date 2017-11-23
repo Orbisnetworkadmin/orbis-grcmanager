@@ -32,7 +32,7 @@
                 [bs/FormControl
                  {:type        "text"
                   :class       "input-sm"
-                  :placeholder "Intrduzca el detalle del seguimiento"
+                  :placeholder "Intrduzca el detalle del Plan"
                   :on-change   #(reset! search (-> % .-target .-value))
                   :on-key-down #(on-enter % do-search)}]
                 [bs/InputGroup.Button
@@ -117,7 +117,7 @@
                 [:div.col-sm-3
                  [tags-panel @tags @selected]]
                 [:div.col-sm-9
-                 [:h2 "Seguimientos "
+                 [:h2 "Planes de Acción"
                   [filters @selected]
                   [new-issue]]
                  [issue-search]
