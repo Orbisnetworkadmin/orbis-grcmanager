@@ -242,6 +242,10 @@
      ::dt/column-label "Status"
      ::dt/sorting      {::dt/enabled? true}}
 
+    {::dt/column-key   [:rating]
+     ::dt/column-label "Comportamiento"
+     ::dt/sorting      {::dt/enabled? false}
+     ::dt/render-fn    rating-formatter}
      ]
    {::dt/pagination    {::dt/enabled? true
                         ::dt/per-page 10}
@@ -266,6 +270,11 @@
    description]
   )
 
+(defn formato-columna-progress [Comportamiento]
+  [:a {:href (str "/riskregister/" (get-in risk-register [:id-risk-register]))}
+   Comportamiento]
+  )
+
 (defn selected-rows-preview []
   [:pre
    [:code
@@ -274,11 +283,53 @@
                           [:risk-registers]])]])
 
 
+(defn rating-formatter []
+  (if
+    get-in risk-register [:id-risk-register])
+  [:div.row>div.col-sm-12 [bs/ProgressBar
+    {:bs-style "info"
+     :max 25
+     :min 0
+     :now  10}]
+  [bs/ProgressBar
+   {:bs-style "success"
+    :max 25
+    :min 0
+    :now  15}]
+   [bs/ProgressBar
+    {:max 25
+     :min 0
+     :now  15}]
+   [bs/ProgressBar
+    {:bs-style "warning"
+     :max 25
+     :min 0
+     :now  15}]
+   [bs/ProgressBar
+    {:bs-style "danger"
+     :max 25
+     :min 0
+     :now  15}]
+   ])
+
+     ;(defn rating-formatter [rating]
+     ;  (reagent/create-class
+     ;    {:component-function
+     ;     (fn [rating]
+     ;       [:div.ui.star.rating {:data-rating rating}])
+     ;
+     ;     :component-did-mount
+     ;     (fn []
+     ;       (.ready (js/$ js/document)
+     ;               (fn []
+     ;                 (.rating (js/$ ".ui.rating") (js-obj "maxRating" 5)))))}))
+
+
 ; Páginas:
 (defn risk-register-sumary-page []
   (r/with-let [atomo-risk-registers-local   (subscribe [:risk-registers])]
               [:div.row
-               [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]]]
+               [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina] [rating-formatter]]]]
 
               ))
 
