@@ -27,6 +27,12 @@
 (defn navbar [{:keys [admin screenname]}]
   [bs/Navbar
    [bs/Navbar.Header]
+      [bs/Navbar.Brand
+    [:a#logo (href "/riskprofile")
+     [:span "Risk Profile"]]]
+   [bs/Navbar.Brand
+    [:a#logo (href "/riskregister")
+     [:span "Risk Register"]]]
    [bs/Navbar.Brand
     [:a#logo (href "/")
      [:span "Planes"]]]

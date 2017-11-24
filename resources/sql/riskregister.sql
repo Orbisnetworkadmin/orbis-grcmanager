@@ -238,4 +238,27 @@ UPDATE riskregister
 SET delete_date = now()
 WHERE id_risk_register = :id-risk-register;
 
+-- :name delete-riskregister-group! :? :*
+-- :doc deletes a set of riskregister given an ID / Elimina un grupo de Risk Registers dado el id
+update orbis.riskregister as rr
+set delete_date = val.delete_date
+from
+  (
+    values :tuple*:set
+  ) as val(id_risk_register, delete_date)
+where rr.id_risk_register = val.id_risk_register;
 
+-- :name tuple-param-list
+-- :doc Tuple Param List
+insert into risk (description_risk)
+values :t*:people
+
+-- :name update-risk-group! :? :*
+-- :doc deletes a set of riskregister given an ID / Elimina un grupo de Risk Registers dado el id
+update orbis.risk as rr
+set description_risk = val.description_risk
+from
+  (
+    values :tuple*:set
+  ) as val(id_risk, description_risk)
+where rr.id_risk = val.id_risk;
