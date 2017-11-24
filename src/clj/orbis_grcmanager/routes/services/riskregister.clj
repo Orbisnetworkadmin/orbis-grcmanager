@@ -101,6 +101,49 @@
                 (s/optional-key :kri-risk-register-title)
                 (s/optional-key :kri-risk-register-descritpion) ]))
 
+(def RiskRegistersGroup
+  (select-keys RiskRegister
+               [:id-risk-register
+                :id-risk
+                :id-risk-subtype
+                :id-campaign
+                :status-risk-register
+                :owner-risk-register
+                :description-risk-register
+                :efect-risk-register
+                :location-risk-register
+                :id-treatment
+                :key-risk-register
+                (s/optional-key :likelihood-risk-register)
+                (s/optional-key :impact-risk-register)
+                (s/optional-key :inherent-risk-register)
+                (s/optional-key :current-risk-register)
+                (s/optional-key :ecd-risk-register)
+                (s/optional-key :ece-risk-register)
+                (s/optional-key :residual-risk-register)
+                (s/optional-key :startdate-identificacion)
+                (s/optional-key :enddate-identificacion)
+                (s/optional-key :technique-identificacion)
+                (s/optional-key :status-identificacion)
+                (s/optional-key :startdate-analisis)
+                (s/optional-key :enddate-analisis)
+                (s/optional-key :technique-analisis)
+                (s/optional-key :status-analisis)
+                (s/optional-key :startdate-evaluacion)
+                (s/optional-key :enddate-evaluacion)
+                (s/optional-key :technique-evaluacion)
+                (s/optional-key :status-evaluacion)
+                (s/optional-key :startdate-tratamiento)
+                (s/optional-key :enddate-tratamiento)
+                (s/optional-key :technique-tratamiento)
+                (s/optional-key :status-tratamiento)
+                (s/optional-key :startdate-monitoreo)
+                (s/optional-key :enddate-monitoreo)
+                (s/optional-key :technique-monitoreo)
+                (s/optional-key :status-monitoreo)
+                (s/optional-key :kri-risk-register-title)
+                (s/optional-key :kri-risk-register-descritpion) ]))
+
 
 ; 2 - Estructuras contenedoras receptoras del Servicio:
 (def RiskRegisterResponse
@@ -163,6 +206,9 @@
 
 (handler delete-risk-register! [riskregister]
          (ok (db/delete-riskregister! riskregister)))
+
+(handler delete-risk-register-group! [riskregister]
+         (ok (db/delete-risk-register-group! riskregister)))
 
 (handler update-risk-register! [riskregister]
  (ok (db/update-riskregister! riskregister)))

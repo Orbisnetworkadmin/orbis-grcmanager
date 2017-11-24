@@ -357,12 +357,6 @@
                    [:div.btn-toolbar.pull-right        [nuevo-rr] [eliminar-rr-group]]]]]
               ))
 
-
-(defn armar-set-delete [{clave :clave} & remaining :as all]
-  (let [culo {:set [[(get-in all [:clave])]]}]
-    culo))
-
-
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 
 

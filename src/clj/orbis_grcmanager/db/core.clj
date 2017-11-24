@@ -181,12 +181,28 @@
                         :admin      admin
                         :is-active  is-active
                         :pass       pass})))))
+
+
+; Risk Register
 ;Funcion para insertar un registro en el riskregister
 
 (defn insertar-risk-register! [riskregister]
   (conman/with-transaction [*db*]
                            (insert-riskregister<! riskregister )
                            ))
+
+(defn armar-group-delete [riskregisters]
+  {:set (into []
+              (for [x (range 0 (count riskregisters))]
+                [(:id-risk-register (riskregisters x))]))})
+
+
+(defn delete-risk-register-group! [riskregister-group]
+  (conman/with-transaction [*db*]
+                           (-> (armar-group-delete riskregister-group)
+                               (delete-riskregister-group!)
+                           )))
+
 
 ; Logs / Logs
 

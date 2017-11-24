@@ -88,10 +88,16 @@
 
 ;Risk Register
 (secretary/defroute (context-url "/riskregister") []
-                    (dispatch [:load-risk-register-sumary]))
+                    (dispatch [:load-risk-register-sumary])
+                    (dispatch [:set-active-page :risk-register-sumary]))
 
 (secretary/defroute (context-url "/riskregister/:id_risk_register") [id_risk_register]
                     (dispatch [:load-risk-register-by-id (js/parseInt id_risk_register)]))
+
+;Risk Profile
+(secretary/defroute (context-url "/riskprofile") []
+                    (dispatch [:load-risk-register-sumary])
+                    (dispatch [:set-active-page :risk-profile-sumary]))
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined

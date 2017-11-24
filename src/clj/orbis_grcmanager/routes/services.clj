@@ -307,6 +307,91 @@
       (riskregister/delete-risk-register! {:id-risk-register id-risk-register}))
 
 
+    (PUT "/riskregistergroup/" []
+      :body-params [id-risk-register               :-   s/Int
+                    id-risk                        :-   s/Str
+                    id-risk-subtype                :-   s/Str
+                    id-campaign                    :-   s/Str
+                    status-risk-register           :-   s/Str
+                    owner-risk-register            :-   s/Str
+                    description-risk-register      :-   s/Str
+                    efect-risk-register            :-   s/Str
+                    location-risk-register         :-   s/Str
+                    id-treatment                   :-   s/Str
+                    key-risk-register              :-   s/Bool
+                    likelihood-risk-register       :-   s/Num
+                    impact-risk-register           :-   s/Num
+                    inherent-risk-register         :-   s/Num
+                    current-risk-register          :-   s/Num
+                    ecd-risk-register              :-   s/Num
+                    ece-risk-register              :-   s/Num
+                    residual-risk-register         :-   s/Num
+                    startdate-identificacion       :-   (s/maybe s/Str)
+                    enddate-identificacion         :-   (s/maybe s/Str)
+                    technique-identificacion       :-   (s/maybe s/Str)
+                    status-identificacion          :-   (s/maybe s/Str)
+                    startdate-analisis             :-   (s/maybe s/Str)
+                    enddate-analisis               :-   (s/maybe s/Str)
+                    technique-analisis             :-   (s/maybe s/Str)
+                    status-analisis                :-   (s/maybe s/Str)
+                    startdate-evaluacion           :-   (s/maybe s/Str)
+                    enddate-evaluacion             :-   (s/maybe s/Str)
+                    technique-evaluacion           :-   (s/maybe s/Str)
+                    status-evaluacion              :-   (s/maybe s/Str)
+                    startdate-tratamiento          :-   (s/maybe s/Str)
+                    enddate-tratamiento            :-   (s/maybe s/Str)
+                    technique-tratamiento          :-   (s/maybe s/Str)
+                    status-tratamiento             :-   (s/maybe s/Str)
+                    startdate-monitoreo            :-   (s/maybe s/Str)
+                    enddate-monitoreo              :-   (s/maybe s/Str)
+                    technique-monitoreo            :-   (s/maybe s/Str)
+                    status-monitoreo               :-   (s/maybe s/Str)
+                    kri-risk-register-title        :-   (s/maybe s/Str)
+                    kri-risk-register-descritpion  :-   (s/maybe s/Str)]
+      :return s/Int
+      :summary "delete a  Risk Register group with the given id / elimina un grupo de registros de riesgos (Risk Register) dado el id"
+      (riskregister/delete-risk-register-group! [{:id-risk-register            id-risk-register
+                                           :id-risk                            id-risk
+                                           :id-risk-subtype                    id-risk-subtype
+                                           :id-campaign                        id-campaign
+                                           :status-risk-register               status-risk-register
+                                           :owner-risk-register                owner-risk-register
+                                           :description-risk-register          description-risk-register
+                                           :efect-risk-register                efect-risk-register
+                                           :location-risk-register             location-risk-register
+                                           :id-treatment                       id-treatment
+                                           :key-risk-register                  key-risk-register
+                                           :likelihood-risk-register           likelihood-risk-register
+                                           :impact-risk-register               impact-risk-register
+                                           :inherent-risk-register             inherent-risk-register
+                                           :current-risk-register              current-risk-register
+                                           :ecd-risk-register                  ecd-risk-register
+                                           :ece-risk-register                  ece-risk-register
+                                           :residual-risk-register             residual-risk-register
+                                           :startdate-identificacion           startdate-identificacion
+                                           :enddate-identificacion             enddate-identificacion
+                                           :technique-identificacion           technique-identificacion
+                                           :status-identificacion              status-identificacion
+                                           :startdate-analisis                 startdate-analisis
+                                           :enddate-analisis                   enddate-analisis
+                                           :technique-analisis                 technique-analisis
+                                           :status-analisis                    status-analisis
+                                           :startdate-evaluacion               startdate-evaluacion
+                                           :enddate-evaluacion                 enddate-evaluacion
+                                           :technique-evaluacion               technique-evaluacion
+                                           :status-evaluacion                  status-evaluacion
+                                           :startdate-tratamiento              startdate-tratamiento
+                                           :enddate-tratamiento                enddate-tratamiento
+                                           :technique-tratamiento              technique-tratamiento
+                                           :status-tratamiento                 status-tratamiento
+                                           :startdate-monitoreo                startdate-monitoreo
+                                           :enddate-monitoreo                  enddate-monitoreo
+                                           :technique-monitoreo                technique-monitoreo
+                                           :status-monitoreo                   status-monitoreo
+                                           :kri-risk-register-title            kri-risk-register-title
+                                           :kri-risk-register-descritpion      kri-risk-register-descritpion  }]))
+
+
     ;; Logs
     (GET "/logs" []
       :return logs/LogSummaryResults
