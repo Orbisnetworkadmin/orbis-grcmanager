@@ -200,109 +200,69 @@
 ; Páginas:
 
 (defn heat-map []
-[:table.table.table-bordered
+  [:table.table.table-bordered.heat-map
  [:thead
     [:tr
-     [:th [:svg.culo
-           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-           ]
-      ]
-     [:th [:svg.culo
-           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-           ]]
-     [:th [:svg.culo
-           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-           ]]
-     [:th [:svg.culo
-           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-           ]]
-     [:th.cellR [:svg.culo
-           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-           ]]
+     [:th.cellYellow "mierda"]
+     [:th.cellOrange]
+     [:th.cellRed ]
+     [:th.cellRed]
+     [:th.cellRed]
      ]
     ]
 
  [:thead
   [:tr
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
+   [:th.cellLGreen ]
+   [:th.cellYellow ]
+   [:th.cellOrange ]
+   [:th.cellRed ]
+   [:th.cellRed ]
    ]
   ]
 
  [:thead
   [:tr
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
+   [:th.cellGreen ]
+   [:th.cellLGreen ]
+   [:th.cellYellow ]
+   [:th.cellOrange ]
+   [:th.cellRed ]
    ]
   ]
 
  [:thead
   [:tr
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
+   [:th.cellGreen ]
+   [:th.cellLGreen ]
+   [:th.cellLGreen ]
+   [:th.cellYellow ]
+   [:th.cellOrange ]
    ]
   ]
 
  [:thead
   [:tr
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
-   [:th  [:svg.culo
-         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
-         ]]
+   [:th.cellGreen ]
+   [:th.cellGreen ]
+   [:th.cellGreen ]
+   [:th.cellLGreen ]
+   [:th.cellYellow ]
    ]
   ]]
 
  )
+(defn svg []
+       [:svg.heat-map
+        [:circle {:fill "red" :stroke "black" :r 5 :cx 10 :cy 400}]
+        [:circle {:fill "red" :stroke "black" :r 5 :cx 250 :cy 75}]
+        ])
+
+(defn svg-texto []
+       [:svg.heat-mapSVG
+        [:text {:fill "black" :x -250 :y 30 :transform "rotate(-90 20,20)"} "Probabilidad"]
+        ]
+       )
 
 
 
@@ -311,17 +271,20 @@
               [:div.container
                [:div.row
                 [:div.col-sm-6
-                 [heat-map]]
+                 [svg-texto][heat-map][svg]]
                 [:div.col-sm-6
-                 "Datos Individuales"                 ]
-                ]
-               [:div.row
-                  [:div.col-sm-12
-                    [:h2 "Risk Profile"]
-                    [buscar-risk-register]]
-                  [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
+                 [heat-map]]]
+               [:div.espacio
+                [:div.row
+                 [:div.col-sm-12
+                  [:h2 "Risk Profile"]
+                  [buscar-risk-register]]
+                 [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
                   [selected-rows-preview]
-                                      ]]]
+
+                  ]]]
+
+               ]
                            ))
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
