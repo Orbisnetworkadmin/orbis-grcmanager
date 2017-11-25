@@ -1,4 +1,4 @@
-(ns orbis-grcmanager.handlers.riskregister
+(ns orbis-grcmanager.handlers.riskprofile
   (:require [orbis-grcmanager.attachments :refer [upload-file!]]
             [re-frame.core :refer [dispatch dispatch-sync reg-event-db reg-event-fx]]
             [orbis-grcmanager.routes :refer [navigate!]]
@@ -88,7 +88,7 @@
     (GET "/api/riskregisters"
          {:handler       #(do
                             (dispatch [:set-risk-registers (:Riskregisters %)])
-
+                            ;(dispatch [:set-active-page :risk-register-sumary])
                             )
 
           :error-handler #(ajax-error %)})

@@ -101,7 +101,7 @@
       :on-click #(reset! confirm-open? true)}
      "Eliminar"
      [confirm-modal
-      "Seguro desea eliminar seguimiento?"
+      "Seguro desea eliminar el Plan?"
       confirm-open?
       #(dispatch [:delete-issue support-issue-id])
       "Eliminar"]]))
@@ -173,7 +173,7 @@
      [attachment-list support-issue-id @files]
      [bs/Button
       {:on-click #(reset! open? true)}
-      "Attachar Archivo"]
+      "Adjuntar Archivo"]
      [upload-form
       support-issue-id
       open?
@@ -229,16 +229,16 @@
      :children
      [[:div.row
        [:div.col-sm-6
-        [:h3.page-title (if @original-issue "Editar Seguimiento" "Anadir Seguimiento")]]
+        [:h3.page-title (if @original-issue "Editar Plan" "Anadir Plan")]]
        [:div.col-sm-6
         [control-buttons original-issue edited-issue]]]
       [bs/FormGroup
-       [bs/ControlLabel "Título del seguimiento"]
+       [bs/ControlLabel "Título del Plan"]
        [input-text
         :model title
         :width "100%"
         :class "edit-issue-title"
-        :placeholder "Titulo del seguimiento"
+        :placeholder "Titulo del Plan"
         :on-change #(reset! title %)]]
       [bs/FormGroup
        [bs/ControlLabel "Resumen"]

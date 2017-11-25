@@ -4,9 +4,6 @@
             [orbis-grcmanager.bootstrap :as bs]))
 
 
-;
-
-
 (defn loading-throbber
   []
   (let [loading? (subscribe [:loading?])]

@@ -8,7 +8,12 @@
             [orbis-grcmanager.pages.home :refer [home-page]]
             [orbis-grcmanager.pages.issues :refer [edit-issue-page view-issue-page]]
             [orbis-grcmanager.pages.auth :refer [login-page logout]]
+<<<<<<< HEAD
             [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page edit-risk-register-page]]))
+=======
+            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page]]
+            [orbis-grcmanager.pages.riskprofile :refer [risk-profile-sumary-page]]))
+>>>>>>> 6b0cebbb8b337cb66f8458cb030aaeaafa3f6e6c
 
 
 ; 5 - Incluir la(s) página(s) asociada(s) en el entorno SPA:
@@ -27,9 +32,15 @@
 (defn navbar [{:keys [admin screenname]}]
   [bs/Navbar
    [bs/Navbar.Header]
+      [bs/Navbar.Brand
+    [:a#logo (href "/riskprofile")
+     [:span "Risk Profile"]]]
+   [bs/Navbar.Brand
+    [:a#logo (href "/riskregister")
+     [:span "Risk Register"]]]
    [bs/Navbar.Brand
     [:a#logo (href "/")
-     [:span "Seguimientos"]]]
+     [:span "Planes"]]]
    [bs/Navbar.Collapse
     (when admin
       [bs/Nav
@@ -76,6 +87,11 @@
 (defmethod pages :risk-register-detail [_ _]
   (.scrollTo js/window 0 0)
   [risk-register-datail-page])
+(defmethod pages :risk-profile-sumary [_ _]
+  (.scrollTo js/window 0 0)
+  [risk-profile-sumary-page])
+
+
 
 ; 5B - Lo expuesto en 5A permitirá que al renderizar la función [main-page] se incluya
 ; nuestra página dinamicammente invocada como parámetro en el metodo pages y en

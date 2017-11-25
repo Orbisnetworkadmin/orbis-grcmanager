@@ -32,7 +32,7 @@
                 [bs/FormControl
                  {:type        "text"
                   :class       "input-sm"
-                  :placeholder "Intrduzca el detalle del seguimiento"
+                  :placeholder "Introduzca el detalle del Plan"
                   :on-change   #(reset! search (-> % .-target .-value))
                   :on-key-down #(on-enter % do-search)}]
                 [bs/InputGroup.Button
@@ -71,11 +71,11 @@
 (defn tags-panel [tags selected]
   (r/with-let [sort-type (r/atom :count)]
               [:div
-               [:h2 "Tags"]
+               [:h2 "Riesgos"]
                [:ul.nav.nav-tabs
                 [:li {:class (when (= @sort-type :count) "active")}
                  [:a {:on-click #(reset! sort-type :count)}
-                  "# Issues"]]
+                  "# Riesgo"]]
                 [:li {:class (when (= @sort-type :name) "active")}
                  [:a {:on-click #(reset! sort-type :name)}
                   "A-Z"]]]
@@ -94,7 +94,7 @@
 (defn filters [selected]
   [:div.btn-toolbar.filters
    [filter-control
-    "All"
+    "Todos"
     selected
     #(navigate! "/all-issues")]
    [filter-control
@@ -102,10 +102,10 @@
     selected
     #(navigate! "/recent-issues")]
    [filter-control
-    "Most Viewed"
+    "Más vistos"
     selected
     #(navigate! "/most-viewed-issues")]
-   (when-not (contains? #{"All" "Recent" "Most Viewed"} selected)
+   (when-not (contains? #{"Todos" "Recent" "Más vistos"} selected)
      [:button.btn.btn-xs.btn-success selected])])
 
 (defn home-page []
@@ -117,7 +117,7 @@
                 [:div.col-sm-3
                  [tags-panel @tags @selected]]
                 [:div.col-sm-9
-                 [:h2 "Seguimientos "
+                 [:h2 "Planes de Acción"
                   [filters @selected]
                   [new-issue]]
                  [issue-search]

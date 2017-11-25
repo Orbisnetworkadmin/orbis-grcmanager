@@ -27,6 +27,7 @@
   (GET "/most-viewed-issues" [] (home-page))
   (GET "/issue/:id" [] (home-page))
   (GET "/issues/:tag-id" [] (home-page))
+  (GET "/riskprofile" [] (home-page))
   (GET "/riskregister" [] (home-page))
   (GET "/riskregister/:id" [] (home-page))
   (GET "/create-rr" [] (home-page))

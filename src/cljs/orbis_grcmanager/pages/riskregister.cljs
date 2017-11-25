@@ -19,13 +19,17 @@
 
 
 
-(defn nuevo-registro []
+(defn nuevo-rr []
   [:a.btn.btn-sm.btn-success.pull-right
-   (href "/create-rr") "Nuevo registro"])
+   (href "/create-rr") "Nuevo"])
 
 (defn editar-registro []
   [:a.btn.btn-sm.btn-success.pull-right
-   (href "/edit-rr") "Editar registro"])
+   (href "/edit-rr") "Editar"])
+
+(defn eliminar-rr-group []
+  [:a.btn.btn-sm.btn-danger.pull-right
+   (href "/delete-group") "Eliminar"])
 
 ; Fin Funciones / Componentes General------------------------------------------------------------------------------------------------------------------
 
@@ -576,6 +580,25 @@
 ; Risk Register Sumary
 
 ; Funciones:
+
+(defn buscar-risk-register []
+  (r/with-let [search (r/atom nil)
+               buscar #(when-let [value (not-empty @search)]
+                            (navigate! (str "/riskregister" value)))]
+              [bs/FormGroup
+               [bs/InputGroup
+                [bs/FormControl
+                 {:type        "text"
+                  :class       "input-sm"
+                  :placeholder "Introduzca el valor de busqueda"
+                  :on-change   #(reset! search (-> % .-target .-value))
+                  :on-key-down #(on-enter % buscar)}]
+                [bs/InputGroup.Button
+                 [:button.btn.btn-sm.btn-default
+                  {:on-click buscar}
+                  "Buscar"]]]]))
+
+; Grid
 ; Define la función de renderización de la tabla re-frame. Se incluyen:
 ;;:NombreDeLaTabla
 ;[:mi-subscripción-re-frame]
@@ -635,10 +658,9 @@
   )
 
 
-
-
 ; Se hace la referencia al ns views de la librería, para funciones de visualización paginación y selección de página.
 ;Risk Register:
+
 (defn control-paginacion []
   [views/default-pagination-controls :RegistrodeRiesgos [:risk-registers]]
   )
@@ -651,11 +673,6 @@
    description]
   )
 
-(defn formato-columna-progress [Comportamiento]
-  [:a {:href (str "/riskregister/" (get-in risk-register [:id-risk-register]))}
-   Comportamiento]
-  )
-
 (defn selected-rows-preview []
   [:pre
    [:code
@@ -663,57 +680,63 @@
                           :RegistrodeRiesgos
                           [:risk-registers]])]])
 
-
-(defn rating-formatter []
-  (if
-    get-in risk-register [:id-risk-register])
-  [:div.row>div.col-sm-12 [bs/ProgressBar
-    {:bs-style "info"
-     :max 25
-     :min 0
-     :now  10}]
-  [bs/ProgressBar
-   {:bs-style "success"
-    :max 25
-    :min 0
-    :now  15}]
+(defn rating-formatter [_ risk-registers]
+  [:div.row>div.col-sm-12
    [bs/ProgressBar
-    {:max 25
-     :min 0
-     :now  15}]
+    (load-progress-bar :inherent-risk-register "VRI"  risk-registers)]
    [bs/ProgressBar
-    {:bs-style "warning"
-     :max 25
-     :min 0
-     :now  15}]
+    (load-progress-bar :current-risk-register "VRC" risk-registers)]
    [bs/ProgressBar
-    {:bs-style "danger"
-     :max 25
-     :min 0
-     :now  15}]
+    (load-progress-bar :residual-risk-register "VRR" risk-registers)]
    ])
 
-     ;(defn rating-formatter [rating]
-     ;  (reagent/create-class
-     ;    {:component-function
-     ;     (fn [rating]
-     ;       [:div.ui.star.rating {:data-rating rating}])
-     ;
-     ;     :component-did-mount
-     ;     (fn []
-     ;       (.ready (js/$ js/document)
-     ;               (fn []
-     ;                 (.rating (js/$ ".ui.rating") (js-obj "maxRating" 5)))))}))
-
+(defn load-progress-bar [clave label risk-registers]
+  (if (not (= (get-in risk-registers [clave]) nil))
+     (cond
+       (and (> (get-in risk-registers [clave]) 3.99) (< (get-in risk-registers [clave]) 7.00))
+         {:bs-style "success"
+          :max 25
+          :min 0
+          :now  (get-in risk-registers [clave])
+          :label label}
+       (and (> (get-in risk-registers [clave]) 6.99) (< (get-in risk-registers [clave]) 10.00))
+         {:bs-style "info"
+          :max 25
+          :min 0
+          :now  (get-in risk-registers [clave])
+          :label label}
+       (and (> (get-in risk-registers [clave]) 9.99) (< (get-in risk-registers [clave]) 13.00))
+        {:bs-style "warning"
+         :max 25
+         :min 0
+         :now  (get-in risk-registers [clave])
+         :label label}
+       (> (get-in risk-registers [clave]) 12.99)
+         {:bs-style "danger"
+          :max 25
+          :min 0
+          :now  (get-in risk-registers [clave])
+          :label label}
+       :else {:max 25
+              :min 0
+              :now  (get-in risk-registers [clave])
+              :label label})
+     {:max 25
+       :min 0
+       :now 0}))
 
 ; Páginas:
 (defn risk-register-sumary-page []
   (r/with-let [atomo-risk-registers-local   (subscribe [:risk-registers])]
-              [:div.row
-               [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina] [rating-formatter]]]]
-
+              [:div.container
+               [:div.row
+                  [:div.col-sm-12
+                    [:h2 "Risk Register"]
+                    [buscar-risk-register]]
+                  [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
+                  [selected-rows-preview]
+                   [:div.btn-toolbar.pull-right        [nuevo-rr] [eliminar-rr-group]]]]]
               ))
-
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 
