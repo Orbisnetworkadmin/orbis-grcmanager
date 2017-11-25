@@ -94,7 +94,6 @@
 (secretary/defroute (context-url "/riskregister/:id_risk_register") [id_risk_register]
                     (dispatch [:load-risk-register-by-id (js/parseInt id_risk_register)]))
 
-<<<<<<< HEAD
 (secretary/defroute (context-url "/create-rr") []
                     (dispatch-sync [:close-risk-register])
                     (run-events
@@ -106,12 +105,11 @@
                                 (nil? @(subscribe [:risk-register])))
                       (navigate! "/")
                       (dispatch [:set-active-page :edit-risk-register])))
-=======
+
 ;Risk Profile
 (secretary/defroute (context-url "/riskprofile") []
                     (dispatch [:load-risk-register-sumary])
                     (dispatch [:set-active-page :risk-profile-sumary]))
->>>>>>> 6b0cebbb8b337cb66f8458cb030aaeaafa3f6e6c
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined

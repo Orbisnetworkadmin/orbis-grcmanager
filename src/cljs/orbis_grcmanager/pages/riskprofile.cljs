@@ -167,13 +167,6 @@
   "vacio"
   ))
 
-
-(defn etiqueta []
-  [:div.row>div.col-sm-12
-   [bs/Label
-    {bs-style "success"} "Mierda"]
-   ])
-
 (defn semaforo [clave risk-registers]
   (if (not (= (get-in risk-registers [clave]) nil))
     (cond
@@ -203,7 +196,7 @@
   [:table.table.table-bordered.heat-map
  [:thead
     [:tr
-     [:th.cellYellow "mierda"]
+     [:th.cellYellow]
      [:th.cellOrange]
      [:th.cellRed ]
      [:th.cellRed]

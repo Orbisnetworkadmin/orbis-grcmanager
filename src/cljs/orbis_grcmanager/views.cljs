@@ -8,12 +8,9 @@
             [orbis-grcmanager.pages.home :refer [home-page]]
             [orbis-grcmanager.pages.issues :refer [edit-issue-page view-issue-page]]
             [orbis-grcmanager.pages.auth :refer [login-page logout]]
-<<<<<<< HEAD
-            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page edit-risk-register-page]]))
-=======
-            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page]]
+            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page edit-risk-register-page]]
             [orbis-grcmanager.pages.riskprofile :refer [risk-profile-sumary-page]]))
->>>>>>> 6b0cebbb8b337cb66f8458cb030aaeaafa3f6e6c
+
 
 
 ; 5 - Incluir la(s) página(s) asociada(s) en el entorno SPA:
