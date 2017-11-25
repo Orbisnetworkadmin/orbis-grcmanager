@@ -8,6 +8,7 @@
                  [cljs-ajax "0.6.0"]
                  [cljsjs/bootstrap "3.3.6-1"]
                  [cljsjs/react-bootstrap "0.30.7-0"]
+                 [cljsjs/react-datepicker "0.55.0-0"]
                  [cljsjs/react-bootstrap-datetimepicker "0.0.22-0"
                   :exclusions [org.webjars.bower/jquery]]
                  [cljsjs/react-select "1.0.0-beta13-0"]

@@ -8,7 +8,7 @@
             [orbis-grcmanager.pages.home :refer [home-page]]
             [orbis-grcmanager.pages.issues :refer [edit-issue-page view-issue-page]]
             [orbis-grcmanager.pages.auth :refer [login-page logout]]
-            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page]]))
+            [orbis-grcmanager.pages.riskregister :refer [risk-register-sumary-page risk-register-datail-page edit-risk-register-page]]))
 
 
 ; 5 - Incluir la(s) página(s) asociada(s) en el entorno SPA:
@@ -62,6 +62,9 @@
 (defmethod pages :edit-issue [_ _]
   (.scrollTo js/window 0 0)
   [edit-issue-page])
+(defmethod pages :edit-risk-register [_ _]
+  (.scrollTo js/window 0 0)
+  [edit-risk-register-page])
 (defmethod pages :view-issue [_ _]
   (.scrollTo js/window 0 0)
   [view-issue-page])

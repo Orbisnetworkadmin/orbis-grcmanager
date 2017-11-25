@@ -1,6 +1,7 @@
 (ns orbis-grcmanager.bootstrap
   (:require
     [reagent.core :as r]
+    cljsjs.react-datepicker
     cljsjs.react-bootstrap
     cljsjs.react-bootstrap-datetimepicker
     cljsjs.react-select))
@@ -120,6 +121,8 @@
 ;;;
 
 (def DateTimeField (r/adapt-react-class js/ReactBootstrapDatetimepicker))
+(def date-picker  (r/adapt-react-class (.createFactory js/React (.-default js/DatePicker))))
+
 
 ;;;
 ;;; REACT-SELECT ELEMENTS
