@@ -49,6 +49,17 @@ table.re-frame-datatable > thead th:after {
     cursor: pointer;
 }
 
+.culo{
+
+    height: 80px;
+    width: 80px;
+
+}
+
+.cellR {
+    background-color: red;
+}
+
 .issue-title > h3 {
     margin: 0px;
     font-size: 24px;

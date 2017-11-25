@@ -93,19 +93,19 @@
     {::dt/column-key   [:inherent-risk-register]
      ::dt/column-label "Inherente"
      ::dt/sorting      {::dt/enabled? true}
-     ;::dt/render-fn    (semaforo-formatter)
+     ::dt/render-fn    semaforo-formatter-inherent
      }
 
     {::dt/column-key   [:current-risk-register]
      ::dt/column-label "Corriente"
      ::dt/sorting      {::dt/enabled? true}
-     ;::dt/render-fn    (semaforo-formatter)
+     ::dt/render-fn    semaforo-formatter-current
      }
 
     {::dt/column-key   [:residual-risk-register]
      ::dt/column-label "Residual"
      ::dt/sorting      {::dt/enabled? true}
-     ;::dt/render-fn    semaforo-formatter
+     ::dt/render-fn    semaforo-formatter-residual
      }
 
     {::dt/column-key   [:status-risk-register]
@@ -142,19 +142,187 @@
                           :RegistrodeRiesgos
                           [:risk-registers]])]])
 
+(defn semaforo-formatter-residual [_ risk-registers]
+  [:div.row>div.col-sm-12
+   [bs/Label
+    (semaforo :residual-risk-register risk-registers) (texto-etiqueta :residual-risk-register risk-registers)]
+   ])
+
+(defn semaforo-formatter-inherent [_ risk-registers]
+  [:div.row>div.col-sm-12
+   [bs/Label
+    (semaforo :inherent-risk-register risk-registers) (texto-etiqueta :inherent-risk-register risk-registers)]
+   ])
+
+(defn semaforo-formatter-current [_ risk-registers]
+  [:div.row>div.col-sm-12
+   [bs/Label
+    (semaforo :current-risk-register risk-registers) (texto-etiqueta :current-risk-register risk-registers)]
+   ])
+
+
+(defn texto-etiqueta [clave risk-registers]
+(if (not (= (get-in risk-registers [clave]) nil))
+  (str (get-in risk-registers [clave]))
+  "vacio"
+  ))
+
+
+(defn etiqueta []
+  [:div.row>div.col-sm-12
+   [bs/Label
+    {bs-style "success"} "Mierda"]
+   ])
+
+(defn semaforo [clave risk-registers]
+  (if (not (= (get-in risk-registers [clave]) nil))
+    (cond
+      (and (> (get-in risk-registers [clave]) 3.99) (< (get-in risk-registers [clave]) 7.00))
+      {:bs-style "success"}
+      (and (> (get-in risk-registers [clave]) 6.99) (< (get-in risk-registers [clave]) 10.00))
+      {:bs-style "info"}
+      (and (> (get-in risk-registers [clave]) 9.99) (< (get-in risk-registers [clave]) 13.00))
+      {:bs-style "warning"}
+      (> (get-in risk-registers [clave]) 12.99)
+      {:bs-style "danger"}
+      :else {:bs-style "primary"}
+      )
+    {:bs-style "default"}))
+
+
+;heat-map
+(defn nuevo-heat-map [tamano]
+    (vec (repeat tamano (vec (repeat tamano 0)))))
+
+(defonce estado
+         (atom {:board (nuevo-heat-map 3)}))
 
 ; Páginas:
+
+(defn heat-map []
+[:table.table.table-bordered
+ [:thead
+    [:tr
+     [:th [:svg.culo
+           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+           ]
+      ]
+     [:th [:svg.culo
+           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+           ]]
+     [:th [:svg.culo
+           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+           ]]
+     [:th [:svg.culo
+           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+           ]]
+     [:th.cellR [:svg.culo
+           [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+           ]]
+     ]
+    ]
+
+ [:thead
+  [:tr
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   ]
+  ]
+
+ [:thead
+  [:tr
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   ]
+  ]
+
+ [:thead
+  [:tr
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   ]
+  ]
+
+ [:thead
+  [:tr
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   [:th  [:svg.culo
+         [:circle {:fill "red" :stroke "black" :r 5 :cx 15 :cy 15}][:circle {:fill "red" :stroke "black" :r 5 :cx 25 :cy 15}]
+         ]]
+   ]
+  ]]
+
+ )
+
+
+
 (defn risk-profile-sumary-page []
   (r/with-let [atomo-risk-profile-local   (subscribe [:risk-registers])]
               [:div.container
+               [:div.row
+                [:div.col-sm-6
+                 [heat-map]]
+                [:div.col-sm-6
+                 "Datos Individuales"                 ]
+                ]
                [:div.row
                   [:div.col-sm-12
                     [:h2 "Risk Profile"]
                     [buscar-risk-register]]
                   [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
                   [selected-rows-preview]
-                   ]]]
-              ))
+                                      ]]]
+                           ))
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 
