@@ -182,7 +182,6 @@
       )
     {:bs-style "default"}))
 
-
 ;heat-map
 (defn nuevo-heat-map [tamano]
     (vec (repeat tamano (vec (repeat tamano 0)))))
