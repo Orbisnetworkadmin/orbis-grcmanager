@@ -94,7 +94,6 @@
 (secretary/defroute (context-url "/riskregister/:id_risk_register") [id_risk_register]
                     (dispatch [:load-risk-register-by-id (js/parseInt id_risk_register)]))
 
-
 (secretary/defroute (context-url "/create-rr") []
                     (dispatch-sync [:close-risk-register])
                     (run-events
