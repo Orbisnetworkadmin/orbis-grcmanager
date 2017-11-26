@@ -49,16 +49,54 @@ table.re-frame-datatable > thead th:after {
     cursor: pointer;
 }
 
-.culo{
+/* ----------------- HEAT MAP ----------------- */
+.espacio{
+    padding-top: 500px;
+}
+.heat-map{
 
-    height: 80px;
-    width: 80px;
+    height: 500px;
+    width: 500px;
+    position:absolute;
+    top:0px;
+    left:35px;
+
 
 }
+.heat-mapSVG{
 
-.cellR {
+    height: 600px;
+    width: 600px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+.cellRed {
     background-color: red;
+    height: 100px;
+    width: 100px;
 }
+.cellLGreen {
+    background-color: limegreen;
+    height: 100px;
+    width: 100px;
+}
+.cellYellow {
+    background-color: yellow;
+    height: 100px;
+    width: 100px;
+}
+.cellOrange {
+    background-color: orange;
+    height: 100px;
+    width: 100px;
+}
+.cellGreen {
+    background-color: green;
+    height: 100px;
+    width: 100px;
+}
+
 
 .issue-title > h3 {
     margin: 0px;
