@@ -42,22 +42,46 @@
 ; Risk Register Details Edit-Insert-Update
 ; Selecciona Keys a ser evaluados
 (defn select-rr-keys [rr]
-  (let [rr-keys [:id-risk
-                 id-risk-subtype
-                 :id-risk-register
-                 :id-campaing
-                 :id-treatment-option
+  (let [rr-keys [:id-risk-register
+                 :id-risk
+                 :id-risk-subtype
+                 :id-campaign
+                 :status-risk-register
+                 :owner-risk-register
                  :description-risk-register
+                 :efect-risk-register
+                 :location-risk-register
+                 :id-treatment
+                 :key-risk-register
                  :likelihood-risk-register
                  :impact-risk-register
-                 :location-risk-register
-                 :xlocation-risk-register
-                 :keyrisk-risk-register
-                 :ece-risk-register
+                 :inherent-risk-register
                  :current-risk-register
                  :ecd-risk-register
+                 :ece-risk-register
                  :residual-risk-register
-                 :inherent-risk-register
+                 :startdate-identificacion
+                 :enddate-identificacion
+                 :technique-identificacion
+                 :status-identificacion
+                 :startdate-analisis
+                 :enddate-analisis
+                 :technique-analisis
+                 :status-analisis
+                 :startdate-evaluacion
+                 :enddate-evaluacion
+                 :technique-evaluacion
+                 :status-evaluacion
+                 :startdate-tratamiento
+                 :enddate-tratamiento
+                 :technique-tratamiento
+                 :status-tratamiento
+                 :startdate-monitoreo
+                 :enddate-monitoreo
+                 :technique-monitoreo
+                 :status-monitoreo
+                 :kri-risk-register-title
+                 :kri-risk-register-descritpion
                  ]]
     ))
 
@@ -130,10 +154,10 @@
                                 (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
               [:div.row>div.col-sm-12
                [confirm-modal
-                "Discard changes?"
+                "Deshacer los cambios?"
                 confirm-open?
                 cancel-edit
-                "Discard"]
+                "Descartar"]
                [validation-modal errors]
                [:div.btn-toolbar.pull-right
                 [bs/Button
@@ -145,11 +169,11 @@
                 [bs/Button
                  {:bs-style   "success"
                   :pull-right true
-                  :on-click   #(when-not (reset! errors (v/validate-create-rr @edited-rr))
-                                 (if issue-id
-                                   (dispatch [:save-issue @edited-rr])
-                                   (dispatch [:create-issue @edited-rr])))}
-                 "Save"]]]))
+                  :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
+                                 (if rr-id
+                                   (dispatch [:save-risk-register @edited-rr])
+                                   (dispatch [:create-risk-register @edited-rr])))}
+                 "Guardar"]]]))
 
 (defn calcular-vri [probabilidad impacto]
    (if (and (empty? probabilidad) (empty? impacto))
@@ -159,7 +183,7 @@
   )
 
 ; Página:
-
+;incompleto
 (defn edit-risk-register-page []
 
 
@@ -278,13 +302,6 @@
                    :width "100%"
                    :placeholder "Nombra riesgo padre"
                    :on-change #(reset! tipo %)]]
-                 [bs/FormGroup
-                  [bs/ControlLabel "Ubicacion del riesgo:"]
-                  [input-text
-                   :model ubicacion
-                   :width "100%"
-                   :placeholder "Nombra la ubicacion del riesgo"
-                   :on-change #(reset! ubicacion %)]]
                  ] [:div.col-sm-6
                     [bs/FormGroup
                      [bs/ControlLabel "Propietario del riesgo:"]
@@ -428,9 +445,6 @@
                                                 "Valor del riesgo continuo"
                                                 corriente
                                                 :text "Introduzca el valor del riesgo continuo"]
-
-                                               [calcular-vri (:likelihood-risk-register @edited-rr) (:impact-risk-register @edited-rr)]
-                                                [:h1 (:inherent-risk-register @edited-rr)]
                                                [bs/FormGroup
                                                 [bs/ControlLabel
                                                  {:class "col-sm-12"}
@@ -442,10 +456,6 @@
                                                    :on-change   #(reset! iherente (-> % .-target .-value))
                                                    :placeholder ""}]]]
 
-                                               [field-group
-                                                "Valor de riesgo inherente"
-                                                corriente
-                                                :text "Introduzca el valor del riesgo continuo"]
 
                                                ]
                                               ]
@@ -566,7 +576,6 @@
                                                [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaSM %)}]
                                                 ] [control-buttons original-rr edited-rr]]
                                              ]  ]
-
                ]
 
               ))

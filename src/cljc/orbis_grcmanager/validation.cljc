@@ -58,3 +58,24 @@
       :admin v/required
       :pass-confirm [[pass-matches? (:pass user)]]
       :is-active v/required)))
+
+(defn validate-create [rr]
+  (format-validation-errors
+    (b/validate
+      (fn [{:keys [path]}]
+        ({[:current-risk-register]   "El riesgo continuio debe ser un numero posiitivo"
+          [:residual-risk-register]         "El riesgo residual debe ser un numero posiitivo"
+          [:inherent-risk-register] "El riesgo inherente debe ser un numero posiitivo"
+          [:description-risk-register] "La descripcion es requerida"
+          [:likelihood-risk-register]  "La probabilidad debe ser numero positivo"
+          [:impact-risk-register]          "El impacto es un numero positivo"
+          }
+          path))
+      rr
+      :current-risk-register    v/required                      ;[v/number v/positive]
+      :residual-risk-register  v/required                        ;[v/number v/positive]
+      :inherent-risk-register   v/required                            ;[v/number v/positive]
+      :description-risk-register v/required
+      :likelihood-risk-register  v/required                           ;[v/number v/positive]
+      :impact-risk-register  v/required                               ;[v/number v/positive]
+      )))
