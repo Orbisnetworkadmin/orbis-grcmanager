@@ -146,6 +146,7 @@
 ;                  )
 
 
+
 ; Verifica que el atomo tenga la información actualizada
 (defn rr-updated? [original-rr edited-rr]
   (if (:id-risk-register edited-rr)
@@ -772,7 +773,102 @@
 ; Risk Register Detail
 ; Define la función de renderización de la tabla re-frame. Se incluyen:
 
+(defn pintar-circulo [risk-registers]
+  [:div
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
+
+
+(defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
+
+
+
+
 ;Pagina:
+
+(defn heat-map []
+  [:table.table.table-bordered.heat-map
+   [:thead
+    [:tr
+     [:th.cellYellow]
+     [:th.cellOrange]
+     [:th.cellRed]
+     [:th.cellRed]
+     [:th.cellRed]
+     ]
+    ]
+
+   [:thead
+    [:tr
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     [:th.cellRed]
+     [:th.cellRed]
+     ]
+    ]
+
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     [:th.cellRed]
+     ]
+    ]
+
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     ]
+    ]
+
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellGreen]
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     ]
+    ]]
+
+  )
+;(defn svg []
+;    ;[:svg.heat-map
+;   [pintar-circulo atomo-risk-profile-local]
+;  ;[:circle {:fill "Green" :stroke "black" :r 5 :cx 10 :cy 400}]
+;   ;(pintar-circulo [])
+;   ;[pintar-circulo atomo-risk-profile-local]
+;   ;]
+;  )
+
+(defn svg-texto []
+  [:svg.heat-mapSVG
+   [:text {:fill "black" :x -250 :y 30 :transform "rotate(-90 20,20)"} "Probabilidad 0 - 5"]
+   ]
+  )
+
+(defn svg-texto-horizontal []
+  [:svg.heat-mapSVG
+   [:text {:fill "black" :x -250 :y 30} "Impacto (0 - 5)"]
+   ]
+  )
+
+
 (defn risk-register-datail-page []
   (r/with-let [rr     (subscribe [:risk-register])
                estado1 (r/atom false)
@@ -787,37 +883,35 @@
                [:div.row
                 [:div.col-sm-12 [:h3.risk-title  "Detalle de riesgo"]]]
                [:div.row
-                 [:div.col-sm-4
+                 [:div.col-sm-6
                   [:h4 (:description-risk-register @rr)]
                   [:label "Riesgo: "] [:p (:id-risk @rr)]
                   [:label "Tipo: "] [:p (:id-risk-subtype @rr)]
                   [:label "Localización del riego: "] [:p (:location-risk-register @rr)]
-
-
                   [bs/Checkbox
                    {:checked   (boolean (:key-risk-register @rr))}
-                   "Reisgo Clave"] ]
-                 [:div.col-sm-4
-                  [:br]
+                   "Riesgo Clave"]
                   [:label "Propietario: "][:p (:owner-risk-register @rr)]
                   [:label "Campaña: "][:p (:id-campaign @rr)]
+                   [:ul
+                    [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
+                    [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
+                    [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]]
                   [:label "Estatus: "][:h3 (:status-risk-register @rr)]
-
-
-                  ] [:div.col-sm-4 [:br] [:br] [:span.pull-right [bs/Badge (:id-risk-register @rr)]
-                                                   ][:ul
-                                                               [:li.risk-detail[:label.risk-small "Valor del riesgo residual: "  (:residual-risk-register @rr)]]
-                                                               [:li.risk-detail[:label.risk-small "Valor del riesgo inherente: "  (:inherent-risk-register @rr)]]
-                                                               [:li.risk-detail[:label.risk-small "Valor del riego continuo: " (:current-risk-register @rr)]]
-                                                               ] [:label "Tratamiento: "][:h3 (:id-treatment @rr)]]
+                  [:span.pull-right [bs/Badge (:id-risk-register @rr)]]
+                ]
+                [:div.col-sm-6
+                 [svg-texto][heat-map][pintar-circulo [@rr] ][svg-texto-horizontal]
+                 [:div.espacio [:label "Tratamiento: "][:h3 (:id-treatment @rr)]] ]
                  ] ]
+
+
                [:br] [:div.row [:div.col-sm-12 [:div.btn-toolbar.pull-right  [editar-registro] ]]]
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
                                                 :on-click #(swap! estado1 not)}
                                                "Identifiacion"
                                                ]]]
-
 
                [bs/Collapse {:in @estado1 } [:div.rounded-panel
                                              [:div.row
