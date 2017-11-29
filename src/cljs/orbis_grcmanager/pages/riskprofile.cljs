@@ -196,21 +196,6 @@
      [componente 10000 10000 "yellow"])
    ])
 
-(defn pintar-circulo-seleccion [risk-registers]
-  [:div
-   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
-     (for [rg risk-registers]
-       [:h1 [:svg.heat-map
-
-             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
-
-             ]]
-       )
-     [componente 10000 10000 "yellow"])
-   ])
-
-
-
 
 (defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
 

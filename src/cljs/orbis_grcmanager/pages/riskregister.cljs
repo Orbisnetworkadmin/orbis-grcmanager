@@ -139,6 +139,13 @@
        (keep #(-> % second not-empty))
        (empty?)))
 
+;(prepare-register [rr]
+;                  ;aqui no recuerdo como se hack, creo que un reset del atomo con un get-in del campo y un js/parseFloat
+;                  ;ve a ver como se hace eso, no recuerdo
+;                  (rf/reset! rf #(update-in rf ))
+;                  )
+
+
 ; Verifica que el atomo tenga la información actualizada
 (defn rr-updated? [original-rr edited-rr]
   (if (:id-risk-register edited-rr)
@@ -172,6 +179,7 @@
                  {:bs-style   "success"
                   :pull-right true
                   :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
+                                 (prepare-register @edited-rr)
                                  (if rr-id
                                    (dispatch [:save-risk-register @edited-rr])
                                    (dispatch [:create-risk-register @edited-rr])))}
