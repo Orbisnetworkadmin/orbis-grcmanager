@@ -98,6 +98,19 @@
       :on-change   #(reset! cursor (-> % .-target .-value))
       :placeholder placeholder}]]])
 
+(defn field-group-numbers [label cursor type placeholder]
+      [bs/FormGroup
+       [bs/ControlLabel
+        {:class "col-sm-12"}
+        label]
+       [:div.col-sm-12
+        [bs/FormControl
+         {:type        type
+          :value       (or @cursor nill)
+          :on-change   #(reset! cursor (js/parseFloat(-> % .-target .-value)) )
+          :placeholder placeholder}]]])
+
+
 
 
 
@@ -148,34 +161,7 @@
 ; Componentes:
 ; Botones:
 ; Salvar y Cancelar
-(defn control-buttons [original-rr edited-rr]
-  (r/with-let [rr-id      (:id-risk-register @edited-rr)
-               errors        (r/atom nil)
-               confirm-open? (r/atom false)
-               cancel-edit   #(navigate!
-                                (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
-              [:div.row>div.col-sm-12
-               [confirm-modal
-                "Deshacer los cambios?"
-                confirm-open?
-                cancel-edit
-                "Descartar"]
-               [validation-modal errors]
-               [:div.btn-toolbar.pull-right
-                [bs/Button
-                 {:bs-style "warning"
-                  :on-click #(if (rr-updated? @original-rr @edited-rr)
-                               (reset! confirm-open? true)
-                               (cancel-edit))}
-                 "Cancel"]
-                [bs/Button
-                 {:bs-style   "success"
-                  :pull-right true
-                  :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
-                                 (if rr-id
-                                   (dispatch [:save-risk-register @edited-rr])
-                                   (dispatch [:create-risk-register @edited-rr])))}
-                 "Guardar"]]]))
+
 
 (defn calcular-vri [probabilidad impacto]
    (if (and (empty? probabilidad) (empty? impacto))
@@ -187,9 +173,7 @@
 ; Página:
 ;incompleto
 (defn edit-risk-register-page []
-
-
-  (r/with-let [ estado1 (r/atom false)
+      (r/with-let [ estado1 (r/atom false)
                estado2 (r/atom false)
                estado3 (r/atom false)
                estado4 (r/atom false)
@@ -206,12 +190,12 @@
                                (update :location-risk-register #(or % ""))
                                (update :id-treatment #(or % ""))
                                (update :key-risk-register #(or % ""))
-                               (update :likelihood-risk-register #(or % ""))
-                               (update :impact-risk-register #(or % ""))
-                               (update :inherent-risk-register #(or % ""))
-                               (update :current-risk-register #(or % ""))
-                               (update :ecd-risk-register #(or % ""))
-                               (update :ece-risk-register #(or % ""))
+                               (update :likelihood-risk-register #(or % nill))
+                               (update :impact-risk-register #(or % nill))
+                               (update :inherent-risk-register #(or % nill))
+                               (update :current-risk-register #(or % nill))
+                               (update :ecd-risk-register #(or % nill))
+                               (update :ece-risk-register #(or % nill))
                                (update :residual-risk-register #(or % ""))
                                (update :startdate-identificacion #(or % ""))
                                (update :enddate-identificacion #(or % ""))
@@ -282,6 +266,35 @@
 
               (def valor
                 (*(:likelihood-risk-register @edited-rr)(:impact-risk-register @edited-rr)))
+
+                  (defn control-buttons [original-rr edited-rr]
+                        (r/with-let [rr-id      (:id-risk-register @edited-rr)
+                                     errors        (r/atom nil)
+                                     confirm-open? (r/atom false)
+                                     cancel-edit   #(navigate!
+                                                      (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
+                                    [:div.row>div.col-sm-12
+                                     [confirm-modal
+                                      "Deshacer los cambios?"
+                                      confirm-open?
+                                      cancel-edit
+                                      "Descartar"]
+                                     [validation-modal errors]
+                                     [:div.btn-toolbar.pull-right
+                                      [bs/Button
+                                       {:bs-style "warning"
+                                        :on-click #(if (rr-updated? @original-rr @edited-rr)
+                                                     (reset! confirm-open? true)
+                                                     (cancel-edit))}
+                                       "Cancel"]
+                                      [bs/Button
+                                       {:bs-style   "success"
+                                        :pull-right true
+                                        :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
+                                                               (if rr-id
+                                                                 (dispatch [:save-risk-register @edited-rr])
+                                                                 (dispatch [:create-risk-register @edited-rr])))}
+                                       "Guardar"]]]))
 
               [:div.container
 
@@ -397,11 +410,12 @@
                                                tecnicaA
                                                :text
                                                :select "Seleciona la tecnica de evalua"]
-                                              [field-group
+
+                                              [field-group-numbers
                                                "Probabilidad del Riesgo"
                                                probabilidad
                                                :number "Introduzca el valor del la probabilidad"]
-                                              [field-group
+                                              [field-group-numbers
                                                "Valor del impacto del Riesgo"
                                                impacto
                                                :number "Introduzca el valor del impacto"]
@@ -446,10 +460,10 @@
                                                 tecnicaE
                                                 :text
                                                 :select "Seleciona la tecnica"]
-                                               [field-group
+                                               [field-group-numbers
                                                 "Valor del riesgo continuo"
                                                 corriente
-                                                :text "Introduzca el valor del riesgo continuo"]
+                                                :number "Introduzca el valor del riesgo continuo"]
                                                [bs/FormGroup
                                                 [bs/ControlLabel
                                                  {:class "col-sm-12"}
@@ -458,8 +472,9 @@
                                                  [bs/FormControl
                                                   {:type   :number
                                                    :value valor
-                                                   :model inherente
-                                                   :on-change    #(reset! inherente (-> % .-target .-value))
+                                                   :model iherente
+                                                   :change-on-blur? false
+                                                   :on-changes #(swap! edited-rr assoc :inherent-risk-register valor)
                                                    :placeholder ""}]
                                                  ]]
 
@@ -468,8 +483,8 @@
                                               ]
                                              [:div.col-sm-6
                                               [bs/FormGroup
-                                               [field-group
-                                                "Eficiencia controles existentes(ECE)"
+                                               [field-group-numbers
+                                                "Eficiencia controles (ECE)"
                                                 ece
                                                 :number "Introduzca el valor del ECE"]
                                                [:label "Fecha de inicio de la evaluación"]
