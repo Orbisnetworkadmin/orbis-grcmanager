@@ -26,13 +26,13 @@
    :location-risk-register                                  s/Str
    :id-treatment                                            s/Str
    :key-risk-register                                       s/Bool
-   (s/optional-key :likelihood-risk-register)               s/Num
-   (s/optional-key :impact-risk-register)                   s/Num
-   (s/optional-key :inherent-risk-register)                 s/Num
-   (s/optional-key :current-risk-register)                  s/Num
-   (s/optional-key :ecd-risk-register)                      s/Num
-   (s/optional-key :ece-risk-register)                      s/Num
-   (s/optional-key :residual-risk-register)                 s/Num
+   (s/optional-key :likelihood-risk-register)               (s/maybe s/Num)
+   (s/optional-key :impact-risk-register)                   (s/maybe s/Num)
+   (s/optional-key :inherent-risk-register)                 (s/maybe s/Num)
+   (s/optional-key :current-risk-register)                  (s/maybe s/Num)
+   (s/optional-key :ecd-risk-register)                      (s/maybe s/Num)
+   (s/optional-key :ece-risk-register)                     (s/maybe s/Num)
+   (s/optional-key :residual-risk-register)                 (s/maybe s/Num)
    (s/optional-key :startdate-identificacion)               (s/maybe s/Str)
    (s/optional-key :enddate-identificacion)                 (s/maybe s/Str)
    (s/optional-key :technique-identificacion)               (s/maybe s/Str)

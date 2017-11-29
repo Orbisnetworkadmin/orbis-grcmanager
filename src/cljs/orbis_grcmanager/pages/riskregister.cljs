@@ -1,6 +1,6 @@
 (ns orbis-grcmanager.pages.riskregister
   (:require [reagent.core :as r]
-            [re-frame.core :refer [subscribe]]
+            [re-frame.core :refer [dispatch subscribe]]
             [orbis-grcmanager.pages.issues :refer [markdown-preview]]
             [orbis-grcmanager.subscriptions :as subs]
             [orbis-grcmanager.key-events :refer [on-enter]]
@@ -97,6 +97,8 @@
       :value       (or @cursor "")
       :on-change   #(reset! cursor (-> % .-target .-value))
       :placeholder placeholder}]]])
+
+
 
 
 (defn field-group-select-estatus [label cursor type cc placeholder]
@@ -278,6 +280,9 @@
 
                ]
 
+              (def valor
+                (*(:likelihood-risk-register @edited-rr)(:impact-risk-register @edited-rr)))
+
               [:div.container
 
                [:div.row
@@ -395,11 +400,11 @@
                                               [field-group
                                                "Probabilidad del Riesgo"
                                                probabilidad
-                                               :text "Introduzca el valor del la probabilidad"]
+                                               :number "Introduzca el valor del la probabilidad"]
                                               [field-group
                                                "Valor del impacto del Riesgo"
                                                impacto
-                                               :text "Introduzca el valor del impacto"]
+                                               :number "Introduzca el valor del impacto"]
                                               ]
                                              [:div.col-sm-6
                                               [bs/FormGroup
@@ -451,10 +456,12 @@
                                                  "Riesgo inherente"]
                                                 [:div.col-sm-12
                                                  [bs/FormControl
-                                                  {:type   :text
-                                                   :value       (*(:likelihood-risk-register @edited-rr) (:impact-risk-register @edited-rr))
-                                                   :on-change   #(reset! iherente (-> % .-target .-value))
-                                                   :placeholder ""}]]]
+                                                  {:type   :number
+                                                   :value valor
+                                                   :model inherente
+                                                   :on-change    #(reset! inherente (-> % .-target .-value))
+                                                   :placeholder ""}]
+                                                 ]]
 
 
                                                ]
@@ -464,7 +471,7 @@
                                                [field-group
                                                 "Eficiencia controles existentes(ECE)"
                                                 ece
-                                                :text "Introduzca el valor del ECE"]
+                                                :number "Introduzca el valor del ECE"]
                                                [:label "Fecha de inicio de la evaluación"]
                                                [:p (:startdate-evaluacion @original-rr)]
                                                [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaIE  %)}]
