@@ -40,7 +40,7 @@
 (defn buscar-risk-register []
   (r/with-let [search (r/atom nil)
                buscar #(when-let [value (not-empty @search)]
-                            (navigate! (str "/riskprofile" value)))]
+                         (navigate! (str "/riskprofile" value)))]
               [bs/FormGroup
                [bs/InputGroup
                 [bs/FormControl
@@ -74,7 +74,7 @@
      ::dt/sorting      {::dt/enabled? false}
      ::dt/column-label "Riesgo"}
 
-     {::dt/column-key   [:id-risk-subtype]
+    {::dt/column-key   [:id-risk-subtype]
      ::dt/column-label "Tipo"}
 
     {::dt/column-key   [:description-risk-register]
@@ -115,8 +115,8 @@
     ]
    {::dt/pagination    {::dt/enabled? true
                         ::dt/per-page 10}
-    ::dt/table-classes [ "table-striped" "table-bordered" "table-hover" "table"],
-    ::dt/selection {::dt/enabled? true}}]
+    ::dt/table-classes ["table-striped" "table-bordered" "table-hover" "table"],
+    ::dt/selection     {::dt/enabled? true}}]
   )
 
 
@@ -139,8 +139,8 @@
   [:pre
    [:code
     @(subscribe [::dt/selected-items
-                          :RegistrodeRiesgos
-                          [:risk-registers]])]])
+                 :RegistrodeRiesgos
+                 [:risk-registers]])]])
 
 (defn semaforo-formatter-residual [_ risk-registers]
   [:div.row>div.col-sm-12
@@ -162,10 +162,10 @@
 
 
 (defn texto-etiqueta [clave risk-registers]
-(if (not (= (get-in risk-registers [clave]) nil))
-  (str (get-in risk-registers [clave]))
-  "vacio"
-  ))
+  (if (not (= (get-in risk-registers [clave]) nil))
+    (str (get-in risk-registers [clave]))
+    "vacio"
+    ))
 
 (defn semaforo [clave risk-registers]
   (if (not (= (get-in risk-registers [clave]) nil))
@@ -182,102 +182,131 @@
       )
     {:bs-style "default"}))
 
-;heat-map
-(defn nuevo-heat-map [tamano]
-    (vec (repeat tamano (vec (repeat tamano 0)))))
 
-(defonce estado
-         (atom {:board (nuevo-heat-map 3)}))
+(defn pintar-circulo [risk-registers]
+  [:div
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
+
+
+(defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
+
 
 ; Páginas:
 
 (defn heat-map []
   [:table.table.table-bordered.heat-map
- [:thead
+   [:thead
     [:tr
      [:th.cellYellow]
      [:th.cellOrange]
-     [:th.cellRed ]
+     [:th.cellRed]
      [:th.cellRed]
      [:th.cellRed]
      ]
     ]
 
- [:thead
-  [:tr
-   [:th.cellLGreen ]
-   [:th.cellYellow ]
-   [:th.cellOrange ]
-   [:th.cellRed ]
-   [:th.cellRed ]
-   ]
-  ]
+   [:thead
+    [:tr
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     [:th.cellRed]
+     [:th.cellRed]
+     ]
+    ]
 
- [:thead
-  [:tr
-   [:th.cellGreen ]
-   [:th.cellLGreen ]
-   [:th.cellYellow ]
-   [:th.cellOrange ]
-   [:th.cellRed ]
-   ]
-  ]
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     [:th.cellRed]
+     ]
+    ]
 
- [:thead
-  [:tr
-   [:th.cellGreen ]
-   [:th.cellLGreen ]
-   [:th.cellLGreen ]
-   [:th.cellYellow ]
-   [:th.cellOrange ]
-   ]
-  ]
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     [:th.cellOrange]
+     ]
+    ]
 
- [:thead
-  [:tr
-   [:th.cellGreen ]
-   [:th.cellGreen ]
-   [:th.cellGreen ]
-   [:th.cellLGreen ]
-   [:th.cellYellow ]
-   ]
-  ]]
+   [:thead
+    [:tr
+     [:th.cellGreen]
+     [:th.cellGreen]
+     [:th.cellGreen]
+     [:th.cellLGreen]
+     [:th.cellYellow]
+     ]
+    ]]
 
- )
-(defn svg []
-       [:svg.heat-map
-        [:circle {:fill "red" :stroke "black" :r 5 :cx 10 :cy 400}]
-        [:circle {:fill "red" :stroke "black" :r 5 :cx 250 :cy 75}]
-        ])
+  )
+;(defn svg []
+;    ;[:svg.heat-map
+;   [pintar-circulo atomo-risk-profile-local]
+;  ;[:circle {:fill "Green" :stroke "black" :r 5 :cx 10 :cy 400}]
+;   ;(pintar-circulo [])
+;   ;[pintar-circulo atomo-risk-profile-local]
+;   ;]
+;  )
 
 (defn svg-texto []
-       [:svg.heat-mapSVG
-        [:text {:fill "black" :x -250 :y 30 :transform "rotate(-90 20,20)"} "Probabilidad"]
-        ]
-       )
+  [:svg.heat-mapSVG
+   [:text {:fill "black" :x -250 :y 30 :transform "rotate(-90 20,20)"} "Probabilidad 0 - 5"]
+   ]
+  )
+
+(defn svg-texto-horizontal []
+  [:svg.heat-mapSVG
+   [:text {:fill "black" :x -250 :y 30} "Impacto (0 - 5)"]
+   ]
+  )
+
+(defn subscription-rows-preview []
+  [:pre
+   [:code
+    (db [:risk-registers])]])
+
 
 
 
 (defn risk-profile-sumary-page []
-  (r/with-let [atomo-risk-profile-local   (subscribe [:risk-registers])]
+  (r/with-let [atomo-risk-profile-local @(subscribe [:risk-registers])]
               [:div.container
                [:div.row
                 [:div.col-sm-6
-                 [svg-texto][heat-map][svg]]
+                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [svg-texto-horizontal]]
                 [:div.col-sm-6
-                 [heat-map]]]
+                 [svg-texto] [heat-map][pintar-circulo @(subscribe [::dt/selected-items
+                                                                     :RegistrodeRiesgos
+                                                                     [:risk-registers]])  ]]]
                [:div.espacio
                 [:div.row
                  [:div.col-sm-12
                   [:h2 "Risk Profile"]
+                  ; Para pruebas
+                  ;[pintar-circulo atomo-risk-profile-local]
+                  ;[:h2 (str  (pintar-circulo @(subscribe [::dt/selected-items
+                  ;                                         :RegistrodeRiesgos
+                  ;                                         [:risk-registers]]) ))]
+                  ; ------------
                   [buscar-risk-register]]
                  [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
-                  [selected-rows-preview]
-
-                  ]]]
-
-               ]
-                           ))
+                  ]]]]))
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 

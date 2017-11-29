@@ -72,7 +72,7 @@
     [:div.form-horizontal
      [:legend title]
      [field-group
-      "Screen Name"
+      "Nombre del Perfil"
       (r/cursor user [:screenname])
       :text "Introduzca el username"]
      [field-group
@@ -83,7 +83,7 @@
         "Introduzca el password (dejar en blanco para usar la misma contrasena)"
         "Introduzca el password")]
      [field-group
-      "Confirm password"
+      "Confirmar password"
       (r/cursor user [:pass-confirm])
       :password "Confirme el password"]
      [bs/FormGroup
@@ -92,7 +92,7 @@
        [bs/Checkbox
         {:checked   (boolean (:admin @user))
          :on-change #(swap! user update :admin not)}
-        "Admin"]
+        "Administrador"]
        [bs/Checkbox
         {:checked   (boolean (:is-active @user))
          :on-change #(swap! user update :is-active not)}

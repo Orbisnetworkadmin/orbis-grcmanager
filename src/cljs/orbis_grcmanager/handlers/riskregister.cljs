@@ -106,6 +106,108 @@
           :error-handler #(ajax-error %)})
     (dissoc db :Riskregister)))
 
+;(reg-event-fx
+;  :create-risk-register
+;  (fn [_ [_ riskregister]]
+;    (POST "/api/riskregister"
+;          {:params        {:id-risk-register                   id-risk-register
+;                           :id-risk                            id-risk
+;                           :id-risk-subtype                    id-risk-subtype
+;                           :id-campaign                        id-campaign
+;                           :status-risk-register               status-risk-register
+;                           :owner-risk-register                owner-risk-register
+;                           :description-risk-register          description-risk-register
+;                           :efect-risk-register                efect-risk-register
+;                           :location-risk-register             location-risk-register
+;                           :id-treatment                       id-treatment
+;                           :key-risk-register                  key-risk-register
+;                           :likelihood-risk-register           likelihood-risk-register
+;                           :impact-risk-register               impact-risk-register
+;                           :inherent-risk-register             inherent-risk-register
+;                           :current-risk-register              current-risk-register
+;                           :ecd-risk-register                  ecd-risk-register
+;                           :ece-risk-register                  ece-risk-register
+;                           :residual-risk-register             residual-risk-register
+;                           :startdate-identificacion           startdate-identificacion
+;                           :enddate-identificacion             enddate-identificacion
+;                           :technique-identificacion           technique-identificacion
+;                           :status-identificacion              status-identificacion
+;                           :startdate-analisis                 startdate-analisis
+;                           :enddate-analisis                   enddate-analisis
+;                           :technique-analisis                 technique-analisis
+;                           :status-analisis                    status-analisis
+;                           :startdate-evaluacion               startdate-evaluacion
+;                           :enddate-evaluacion                 enddate-evaluacion
+;                           :technique-evaluacion               technique-evaluacion
+;                           :status-evaluacion                  status-evaluacion
+;                           :startdate-tratamiento              startdate-tratamiento
+;                           :enddate-tratamiento                enddate-tratamiento
+;                           :technique-tratamiento              technique-tratamiento
+;                           :status-tratamiento                 status-tratamiento
+;                           :startdate-monitoreo                startdate-monitoreo
+;                           :enddate-monitoreo                  enddate-monitoreo
+;                           :technique-monitoreo                technique-monitoreo
+;                           :status-monitoreo                   status-monitoreo
+;                           :kri-risk-register-title            kri-risk-register-title
+;                           :kri-risk-register-descritpion      kri-risk-register-descritpion  }
+;           :handler       #(do
+;                             (dispatch-sync [:set-risk-register riskregister %])
+;                             (navigate! (str "/riskregister" %)))
+;           :error-handler #(ajax-error %)})
+;    nil))
+;
+;;incompleto
+;(reg-event-fx
+;  :save-risk-register
+;  (fn [_ [_ {:keys [id-risk-register id-risk id-risk-subtype id-campaign status-risk-register owner-risk-register
+;                    description-risk-register efect-risk-register location-risk-register id-treatment] :as rr}]]
+;    (PUT "/api/riskregister"
+;          {:params        {:id-risk-register            id-risk-register
+;                           :id-risk                            id-risk
+;                           :id-risk-subtype                    id-risk-subtype
+;                           :id-campaign                        id-campaign
+;                           :status-risk-register               status-risk-register
+;                           :owner-risk-register                owner-risk-register
+;                           :description-risk-register          description-risk-register
+;                           :efect-risk-register                efect-risk-register
+;                           :location-risk-register             location-risk-register
+;                           :id-treatment                       id-treatment
+;                           :key-risk-register                  key-risk-register
+;                           :likelihood-risk-register           likelihood-risk-register
+;                           :impact-risk-register               impact-risk-register
+;                           :inherent-risk-register             inherent-risk-register
+;                           :current-risk-register              current-risk-register
+;                           :ecd-risk-register                  ecd-risk-register
+;                           :ece-risk-register                  ece-risk-register
+;                           :residual-risk-register             residual-risk-register
+;                           :startdate-identificacion           startdate-identificacion
+;                           :enddate-identificacion             enddate-identificacion
+;                           :technique-identificacion           technique-identificacion
+;                           :status-identificacion              status-identificacion
+;                           :startdate-analisis                 startdate-analisis
+;                           :enddate-analisis                   enddate-analisis
+;                           :technique-analisis                 technique-analisis
+;                           :status-analisis                    status-analisis
+;                           :startdate-evaluacion               startdate-evaluacion
+;                           :enddate-evaluacion                 enddate-evaluacion
+;                           :technique-evaluacion               technique-evaluacion
+;                           :status-evaluacion                  status-evaluacion
+;                           :startdate-tratamiento              startdate-tratamiento
+;                           :enddate-tratamiento                enddate-tratamiento
+;                           :technique-tratamiento              technique-tratamiento
+;                           :status-tratamiento                 status-tratamiento
+;                           :startdate-monitoreo                startdate-monitoreo
+;                           :enddate-monitoreo                  enddate-monitoreo
+;                           :technique-monitoreo                technique-monitoreo
+;                           :status-monitoreo                   status-monitoreo
+;                           :kri-risk-register-title            kri-risk-register-title
+;                           :kri-risk-register-descritpion      kri-risk-register-descritpion  }
+;           :handler       #(do
+;                             (dispatch-sync [:set-risk-register riskregister %])
+;                             (navigate! (str "/riskregister/" id-risk-register)))
+;           :error-handler #(ajax-error %)})
+;    nil))
+
 (reg-event-fx
   :create-risk-register
   (fn [_ [_ {:keys [ id-risk id-risk-subtype id-campaign status-risk-register owner-risk-register
@@ -218,3 +320,4 @@
                              (navigate! (str "/riskregister/" id-risk-register)))
            :error-handler #(ajax-error %)})
     nil))
+
