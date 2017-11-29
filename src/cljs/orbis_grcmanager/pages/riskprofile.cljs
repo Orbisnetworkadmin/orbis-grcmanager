@@ -182,33 +182,35 @@
       )
     {:bs-style "default"}))
 
-;(defn pintar-circulo [risk-registers]
-;  [:div
-;   (for [x (range 0 (count risk-registers))]
-;     (if (or (= (:impact-risk-register (get risk-registers x)) nil) (= (:likelihood-risk-register (get risk-registers x)) nil))
-;       [:circle {:fill "yellow" :stroke "black" :r 1 :cx 200 :cy 200}]
-;       [componente (:impact-risk-register (get risk-registers x)) (:likelihood-risk-register (get risk-registers x)) "red"]))])
-;
 
 (defn pintar-circulo [risk-registers]
   [:div
-   (for [rg risk-registers]
-     [:h1 [:svg.heat-map [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]]
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
+
+(defn pintar-circulo-seleccion [risk-registers]
+  [:div
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
 
 
-      ]
-     )])
 
-;(defn pintar-circulos [risk-registers]
-;  [div
-;   [:h1 "prueba"]
-   ;(for [rg risk-registers]
-   ;  (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
-   ;    [:circle {:fill "yellow" :stroke "black" :r 1 :cx 200 :cy 200}]
-   ;    (componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red")
-   ;    ))
-   ;[componente 4 3 "red"]
-   ;])
 
 (defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
 
@@ -268,14 +270,14 @@
     ]]
 
   )
-(defn svg []
-    ;[:svg.heat-map
-   [pintar-circulo atomo-risk-profile-local]
-  ;[:circle {:fill "Green" :stroke "black" :r 5 :cx 10 :cy 400}]
-   ;(pintar-circulo [])
-   ;[pintar-circulo atomo-risk-profile-local]
-   ;]
-  )
+;(defn svg []
+;    ;[:svg.heat-map
+;   [pintar-circulo atomo-risk-profile-local]
+;  ;[:circle {:fill "Green" :stroke "black" :r 5 :cx 10 :cy 400}]
+;   ;(pintar-circulo [])
+;   ;[pintar-circulo atomo-risk-profile-local]
+;   ;]
+;  )
 
 (defn svg-texto []
   [:svg.heat-mapSVG
@@ -302,26 +304,24 @@
               [:div.container
                [:div.row
                 [:div.col-sm-6
-                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local]]
+                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [svg-texto-horizontal]]
                 [:div.col-sm-6
-                 [heat-map]]]
+                 [svg-texto] [heat-map][pintar-circulo @(subscribe [::dt/selected-items
+                                                                     :RegistrodeRiesgos
+                                                                     [:risk-registers]])  ]]]
                [:div.espacio
                 [:div.row
                  [:div.col-sm-12
                   [:h2 "Risk Profile"]
-                  [pintar-circulo atomo-risk-profile-local]
-                  [componente 150 250 "Green"]
-                  ;Viste que si devuelve html Si devuelve pero en resultados de funciones lo convierte en lazyseq
-                  [:h2 (str  (pintar-circulo atomo-risk-profile-local))]
-                  ;[:h2 (risk-registers [:risk-registers]) ]
-                 [buscar-risk-register]]
+                  ; Para pruebas
+                  ;[pintar-circulo atomo-risk-profile-local]
+                  ;[:h2 (str  (pintar-circulo @(subscribe [::dt/selected-items
+                  ;                                         :RegistrodeRiesgos
+                  ;                                         [:risk-registers]]) ))]
+                  ; ------------
+                  [buscar-risk-register]]
                  [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
-                  [selected-rows-preview]
-
-                  ]]]
-
-               ]
-              ))
+                  ]]]]))
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
 

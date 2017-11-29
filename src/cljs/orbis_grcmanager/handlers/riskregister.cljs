@@ -106,7 +106,6 @@
           :error-handler #(ajax-error %)})
     (dissoc db :Riskregister)))
 
-<<<<<<< HEAD
 ;(reg-event-fx
 ;  :create-risk-register
 ;  (fn [_ [_ riskregister]]
@@ -208,7 +207,7 @@
 ;                             (navigate! (str "/riskregister/" id-risk-register)))
 ;           :error-handler #(ajax-error %)})
 ;    nil))
-=======
+
 (reg-event-fx
   :create-risk-register
   (fn [_ [_ {:keys [ id-risk id-risk-subtype id-campaign status-risk-register owner-risk-register
@@ -321,4 +320,4 @@
                              (navigate! (str "/riskregister/" id-risk-register)))
            :error-handler #(ajax-error %)})
     nil))
->>>>>>> cb073f9abd16f8e2289634551120e93e83392c44
+
