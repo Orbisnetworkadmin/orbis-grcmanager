@@ -108,9 +108,15 @@
 
 (reg-event-fx
   :create-risk-register
-  (fn [_ [_ riskregister]]
+  (fn [_ [_ {:keys [ id-risk id-risk-subtype id-campaign status-risk-register owner-risk-register
+                    description-risk-register efect-risk-register location-risk-register id-treatment  key-risk-register
+                    likelihood-risk-register impact-risk-register inherent-risk-register current-risk-register ecd-risk-register
+                    ece-risk-register residual-risk-register startdate-identificacion enddate-identificacion technique-identificacion
+                    status-identificacion startdate-analisis enddate-analisis technique-analisis status-analisis startdate-evaluacion
+                    enddate-evaluacion technique-evaluacion status-evaluacion startdate-tratamiento enddate-tratamiento technique-tratamiento
+                    status-tratamiento startdate-monitoreo enddate-monitoreo technique-monitoreo status-monitoreo kri-risk-register-title kri-risk-register-descritpion] :as rr}]]
     (POST "/api/riskregister"
-          {:params        {:id-risk-register            id-risk-register
+          {:params        {
                            :id-risk                            id-risk
                            :id-risk-subtype                    id-risk-subtype
                            :id-campaign                        id-campaign
@@ -151,7 +157,7 @@
                            :kri-risk-register-title            kri-risk-register-title
                            :kri-risk-register-descritpion      kri-risk-register-descritpion  }
            :handler       #(do
-                             (dispatch-sync [:set-risk-register riskregister %])
+                             (dispatch-sync [:set-risk-register rr %])
                              (navigate! (str "/riskregister" %)))
            :error-handler #(ajax-error %)})
     nil))
@@ -160,7 +166,12 @@
 (reg-event-fx
   :save-risk-register
   (fn [_ [_ {:keys [id-risk-register id-risk id-risk-subtype id-campaign status-risk-register owner-risk-register
-                    description-risk-register efect-risk-register location-risk-register id-treatment] :as rr}]]
+                    description-risk-register efect-risk-register location-risk-register id-treatment  key-risk-register
+                    likelihood-risk-register impact-risk-register inherent-risk-register current-risk-register ecd-risk-register
+                    ece-risk-register residual-risk-register startdate-identificacion enddate-identificacion technique-identificacion
+                    status-identificacion startdate-analisis enddate-analisis technique-analisis status-analisis startdate-evaluacion
+                    enddate-evaluacion technique-evaluacion status-evaluacion startdate-tratamiento enddate-tratamiento technique-tratamiento
+                    status-tratamiento startdate-monitoreo enddate-monitoreo technique-monitoreo status-monitoreo kri-risk-register-title kri-risk-register-descritpion] :as rr}]]
     (PUT "/api/riskregister"
           {:params        {:id-risk-register            id-risk-register
                            :id-risk                            id-risk
@@ -203,7 +214,7 @@
                            :kri-risk-register-title            kri-risk-register-title
                            :kri-risk-register-descritpion      kri-risk-register-descritpion  }
            :handler       #(do
-                             (dispatch-sync [:set-risk-register riskregister %])
+                             (dispatch-sync [:set-risk-register rr %])
                              (navigate! (str "/riskregister/" id-risk-register)))
            :error-handler #(ajax-error %)})
     nil))

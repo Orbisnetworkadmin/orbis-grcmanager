@@ -142,13 +142,13 @@
                     location-risk-register         :-   s/Str
                     id-treatment                   :-   s/Str
                     key-risk-register              :-   s/Bool
-                    likelihood-risk-register       :-   s/Num
-                    impact-risk-register           :-   s/Num
-                    inherent-risk-register         :-   s/Num
-                    current-risk-register          :-   s/Num
-                    ecd-risk-register              :-   s/Num
-                    ece-risk-register              :-   s/Num
-                    residual-risk-register         :-   s/Num
+                    likelihood-risk-register       :-   (s/maybe s/Num)
+                    impact-risk-register           :-   (s/maybe s/Num)
+                    inherent-risk-register         :-   (s/maybe s/Num)
+                    current-risk-register          :-   (s/maybe s/Num)
+                    ecd-risk-register              :-   (s/maybe s/Num)
+                    ece-risk-register              :-   (s/maybe s/Num)
+                    residual-risk-register         :-   (s/maybe s/Num)
                     startdate-identificacion       :-   (s/maybe s/Str)
                     enddate-identificacion         :-   (s/maybe s/Str)
                     technique-identificacion       :-   (s/maybe s/Str)
@@ -226,13 +226,13 @@
                     location-risk-register         :-   s/Str
                     id-treatment                   :-   s/Str
                     key-risk-register              :-   s/Bool
-                    likelihood-risk-register       :-   s/Num
-                    impact-risk-register           :-   s/Num
-                    inherent-risk-register         :-   s/Num
-                    current-risk-register          :-   s/Num
-                    ecd-risk-register              :-   s/Num
-                    ece-risk-register              :-   s/Num
-                    residual-risk-register         :-   s/Num
+                    likelihood-risk-register       :-   (s/maybe  s/Num)
+                    impact-risk-register           :-   (s/maybe s/Num)
+                    inherent-risk-register         :-   (s/maybe s/Num)
+                    current-risk-register          :-   (s/maybe s/Num)
+                    ecd-risk-register              :-   (s/maybe s/Num)
+                    ece-risk-register              :-   (s/maybe s/Num)
+                    residual-risk-register         :-   (s/maybe s/Num)
                     startdate-identificacion       :-   (s/maybe s/Str)
                     enddate-identificacion         :-   (s/maybe s/Str)
                     technique-identificacion       :-   (s/maybe s/Str)
