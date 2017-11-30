@@ -189,15 +189,29 @@
      (for [rg risk-registers]
        [:h1 [:svg.heat-map
 
-             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
+             ;[componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:id-risk-register rg))]
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
 
+(defn pintar-id [risk-registers]
+  [:div
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             ;[componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
+             [componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:id-risk-register rg))]
              ]]
        )
      [componente 10000 10000 "yellow"])
    ])
 
 
-(defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
+(defn componente [x y color] [:circle {:fill color :stroke "black" :r 20 :cx (* x 100) :cy (- 500 (* y 100))}])
+(defn componente-texto [x y texto] [:text {:fill "black" :x (* x 100) :y (- 500 (* y 100)) :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} texto])
 
 
 ; Páginas:
@@ -289,11 +303,13 @@
               [:div.container
                [:div.row
                 [:div.col-sm-6
-                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [svg-texto-horizontal]]
+                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]]
                 [:div.col-sm-6
                  [svg-texto] [heat-map][pintar-circulo @(subscribe [::dt/selected-items
                                                                      :RegistrodeRiesgos
-                                                                     [:risk-registers]])  ]]]
+                                                                     [:risk-registers]])  ] [pintar-id @(subscribe [::dt/selected-items
+                                                                                                                                                           :RegistrodeRiesgos
+                                                                                                                                                           [:risk-registers]])]  ]]
                [:div.espacio
                 [:div.row
                  [:div.col-sm-12
@@ -303,9 +319,12 @@
                   ;[:h2 (str  (pintar-circulo @(subscribe [::dt/selected-items
                   ;                                         :RegistrodeRiesgos
                   ;                                         [:risk-registers]]) ))]
-                  ; ------------
+
                   [buscar-risk-register]]
-                 [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
+                 [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]
+
+                                  ]
+
                   ]]]]))
 
 ; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------

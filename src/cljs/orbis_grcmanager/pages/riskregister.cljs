@@ -786,9 +786,21 @@
      [componente 10000 10000 "yellow"])
    ])
 
+(defn pintar-id [risk-registers]
+  [:div
+   (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
+     (for [rg risk-registers]
+       [:h1 [:svg.heat-map
+
+             ;[componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
+             [componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:inherent-risk-register rg))]
+             ]]
+       )
+     [componente 10000 10000 "yellow"])
+   ])
 
 (defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
-
+(defn componente-texto [x y texto] [:text {:fill "black" :x (* x 100) :y (- 500 (* y 100)) :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} texto])
 
 
 
@@ -901,7 +913,7 @@
                   [:span.pull-right [bs/Badge (:id-risk-register @rr)]]
                 ]
                 [:div.col-sm-6
-                 [svg-texto][heat-map][pintar-circulo [@rr] ][svg-texto-horizontal]
+                 [svg-texto][heat-map][pintar-circulo [@rr] ][svg-texto-horizontal] [pintar-id [@rr] ]
                  [:div.espacio [:label "Tratamiento: "][:h3 (:id-treatment @rr)]] ]
                  ] ]
 

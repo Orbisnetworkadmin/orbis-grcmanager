@@ -97,6 +97,10 @@ table.re-frame-datatable > thead th:after {
     width: 100px;
 }
 
+.text-heat-map {
+    font-size: 6pt;
+}
+
 
 .issue-title > h3 {
     margin: 0px;
