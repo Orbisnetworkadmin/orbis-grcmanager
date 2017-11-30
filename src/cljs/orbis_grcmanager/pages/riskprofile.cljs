@@ -188,9 +188,13 @@
    (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
      (for [rg risk-registers]
        [:h1 [:svg.heat-map
+             ;[:g
 
-             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
-             ;[componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:id-risk-register rg))]
+
+             [:g [:title "Prueba"][componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white"]]
+
+              ;[componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:id-risk-register rg))]
+              ;]
              ]]
        )
      [componente 10000 10000 "yellow"])
@@ -201,10 +205,9 @@
    (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
      (for [rg risk-registers]
        [:h1 [:svg.heat-map
-
-             ;[componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
              [componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:id-risk-register rg))]
-             ]]
+             ]
+        ]
        )
      [componente 10000 10000 "yellow"])
    ])
@@ -213,6 +216,8 @@
 (defn componente [x y color] [:circle {:fill color :stroke "black" :r 20 :cx (* x 100) :cy (- 500 (* y 100))}])
 (defn componente-texto [x y texto] [:text {:fill "black" :x (* x 100) :y (- 500 (* y 100)) :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} texto])
 
+
+;[:svg.heat-map [:circle {:fill "blue" :stroke "black" :r 20 :cx 100 :cy 100}][:text {:fill "black" :x 100 :y 100 :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} "10"]]
 
 ; Páginas:
 
@@ -303,7 +308,9 @@
               [:div.container
                [:div.row
                 [:div.col-sm-6
-                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]]
+                 ;[svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]
+                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]
+                 ]
                 [:div.col-sm-6
                  [svg-texto] [heat-map][pintar-circulo @(subscribe [::dt/selected-items
                                                                      :RegistrodeRiesgos
@@ -322,12 +329,20 @@
 
                   [buscar-risk-register]]
                  [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]
-
+                                  ;pruebas:
+                                  ;[:svg.heat-map [:g [:title "Prueba"]
+                                  ;                [:circle {:fill "green" :stroke "black" :r 20 :cx 120 :cy 120}][:text {:fill "black" :x 120 :y 120 :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} "10"]
+                                  ;                ]
+                                  ; [:g [:title "Mierda"]
+                                  ;  [:circle {:fill "blue" :stroke "black" :r 20 :cx 100 :cy 100}][:text {:fill "black" :x 100 :y 100 :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} "10"]
+                                  ;  ]
+                                  ; ]
+                                  ; Fin pruebas
                                   ]
 
                   ]]]]))
 
-; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
+; Fin Risk Register Summary---------------------------------------------------------------------------------------------------------------------
 
 
 
