@@ -74,7 +74,7 @@
       rr
       :current-risk-register    v/required                      ;[v/number v/positive]
       :residual-risk-register  v/required                        ;[v/number v/positive]
-      ;:inherent-risk-register   v/required                            ;[v/number v/positive]
+      :inherent-risk-register   v/required                            ;[v/number v/positive]
       :description-risk-register v/required
       :likelihood-risk-register  v/required                           ;[v/number v/positive]
       :impact-risk-register  v/required                               ;[v/number v/positive]

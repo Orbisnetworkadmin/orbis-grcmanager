@@ -316,7 +316,7 @@
                            :kri-risk-register-title            kri-risk-register-title
                            :kri-risk-register-descritpion      kri-risk-register-descritpion  }
            :handler       #(do
-                             (dispatch-sync [:set-risk-register rr %])
+                             (dispatch-sync [:set-risk-register  rr ])
                              (navigate! (str "/riskregister/" id-risk-register)))
            :error-handler #(ajax-error %)})
     nil))
