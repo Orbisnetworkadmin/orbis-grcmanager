@@ -245,10 +245,10 @@
        [input-text
         :model summary
         :width "100%"
-        :placeholder "Resumen del seguimiento"
+        :placeholder "Resumen del Plan"
         :on-change #(reset! summary %)]]
       [bs/FormGroup
-       [bs/ControlLabel "Tags"]
+       [bs/ControlLabel "Riesgo Asociado"]
        [tag-editor tags]]
       [:div.row>div.col-sm-12
        [issue-detail-pane detail]]
