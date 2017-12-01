@@ -166,7 +166,7 @@
                            :kri-risk-register-descritpion      kri-risk-register-descritpion  }
            :handler       #(do
                              (dispatch-sync [:set-risk-register rr %])
-                             (navigate! (str "/riskregister" %)))
+                             (navigate! (str "/riskregister" )))
            :error-handler #(ajax-error %)})
     nil))
 

@@ -465,7 +465,7 @@
                                                                      (dispatch [:save-risk-register @edited-rr]))
                                                                  (do (swap! edited-rr assoc :inherent-risk-register valor)
                                                                    (dispatch [:create-risk-register @edited-rr])
-                                                                     (navigate! "/riskregister"))
+                                                                     )
                                                                  ))}
                                        "Guardar"]]]))
 
@@ -1015,7 +1015,7 @@
                     :on-click #(reset! confirm-open? true)}
                    "Eliminar"
                    [confirm-modal
-                    "Seguro desea eliminar el Plan?"
+                    "Seguro desea eliminar el registro de riesgo?"
                     confirm-open?
                     #(dispatch [:delete-risk-register id-risk-register])
                     "Eliminar"]]))
@@ -1026,7 +1026,7 @@
      (for [rg risk-registers]
           [:svg.heat-map {:xmlns "http://www.w3.org/2000/svg"}
 
-           [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "blue"]
+           [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white"]
 
            ]
        )
@@ -1039,13 +1039,16 @@
      (for [rg risk-registers]
        [:h1 [:svg.heat-map
 
-(defn componente [x y color] [:circle {  :fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))} ])
+
+;(defn componente [x y color] [:circle {  :fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))} ])
+
              ;[componente (:impact-risk-register rg) (:likelihood-risk-register rg) "white" ]
              [componente-texto (:impact-risk-register rg) (:likelihood-risk-register rg) (str (:inherent-risk-register rg))]
              ]]
        )
      [componente 10000 10000 "yellow"])
    ])
+
 
 (defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
 (defn componente-texto [x y texto] [:text {:fill "black" :x (* x 100) :y (- 500 (* y 100)) :text-anchor "middle" :stroke "black" :stroke-width "1px" :dy ".3em"} texto])
@@ -1055,7 +1058,7 @@
 ;Pagina:
 
 (defn heat-map []
-  [:table.table.table-bordered.heat-map
+  [:table.table.table-bordered.heat-mapT
    [:thead
     [:tr
      [:th.cellYellow]

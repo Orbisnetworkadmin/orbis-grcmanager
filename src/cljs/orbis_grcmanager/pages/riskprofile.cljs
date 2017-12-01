@@ -222,7 +222,7 @@
 ; Páginas:
 
 (defn heat-map []
-  [:table.table.table-bordered.heat-map
+  [:table.table.table-bordered.heat-mapT
    [:thead
     [:tr
      [:th.cellYellow]
@@ -286,14 +286,11 @@
 (defn svg-texto []
   [:svg.heat-mapSVG
    [:text {:fill "black" :x -250 :y 30 :transform "rotate(-90 20,20)"} "Probabilidad 0 - 5"]
+   [:text {:fill "black" :x 250 :y 525} "Impacto 0 - 5"]
    ]
   )
 
-(defn svg-texto-horizontal []
-  [:svg.heat-mapSVG
-   [:text {:fill "black" :x -250 :y 30} "Impacto (0 - 5)"]
-   ]
-  )
+
 
 (defn subscription-rows-preview []
   [:pre
@@ -309,14 +306,14 @@
                [:div.row
                 [:div.col-sm-6
                  ;[svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]
-                 [svg-texto] [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto-horizontal]
+                  [heat-map][pintar-circulo atomo-risk-profile-local] [pintar-id atomo-risk-profile-local] [svg-texto]
                  ]
                 [:div.col-sm-6
-                 [svg-texto] [heat-map][pintar-circulo @(subscribe [::dt/selected-items
+                  [heat-map][pintar-circulo @(subscribe [::dt/selected-items
                                                                      :RegistrodeRiesgos
                                                                      [:risk-registers]])  ] [pintar-id @(subscribe [::dt/selected-items
                                                                                                                                                            :RegistrodeRiesgos
-                                                                                                                                                           [:risk-registers]])]  ]]
+                                                                                                                                                           [:risk-registers]])] [svg-texto] ]]
                [:div.espacio
                 [:div.row
                  [:div.col-sm-12
