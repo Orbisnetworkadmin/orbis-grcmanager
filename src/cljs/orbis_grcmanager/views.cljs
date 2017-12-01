@@ -39,7 +39,7 @@
     [:a#logo (href "/riskregister")
      [:span "Risk Register"]]]
    [bs/Navbar.Brand
-    [:a#logo (href "/")
+    [:a#logo (href "/planes")
      [:span "Planes"]]]
    [bs/Navbar.Collapse
     (when admin

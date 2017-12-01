@@ -111,7 +111,7 @@
                errors        (r/atom nil)
                confirm-open? (r/atom false)
                cancel-edit   #(navigate!
-                               (if issue-id (str "/issue/" issue-id) "/"))]
+                               (if issue-id (str "/issue/" issue-id) "/planes"))]
     [:div.row>div.col-sm-12
      [confirm-modal
       "Descartar los cambios?"

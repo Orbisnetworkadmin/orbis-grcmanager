@@ -16,6 +16,7 @@
   ; Servicios / Rutas del Core:
   (GET "/" [] (home-page))
   (GET "/search/:query" [] (home-page))
+  (GET "/planes" [] (home-page))
   (GET "/users" [] (home-page))
   (GET "/logs" [] (home-page))
   (GET "/log/:id" [] (home-page))

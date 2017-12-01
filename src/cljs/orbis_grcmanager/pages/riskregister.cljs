@@ -10,9 +10,13 @@
             [orbis-grcmanager.validation :as v]
             [re-frame-datatable.core :as dt]
             [re-frame-datatable.views :as views]
+            [cljs-time.core    :refer [now days minus plus day-of-week before?]]
+            [cljs-time.coerce  :refer [to-local-date]]
+            [cljs-time.format  :refer [formatter unparse]]
             [orbis-grcmanager.pages.common :refer [validation-modal confirm-modal]]
+            [re-com.datepicker :refer [iso8601->date datepicker-dropdown-args-desc]]
             [re-com.core
-             :refer [box v-box h-split v-split title flex-child-style input-text input-textarea]]))
+             :refer [box h-box v-box h-split v-split title flex-child-style input-text input-textarea gap single-dropdown datepicker datepicker-dropdown checkbox label title p md-icon-button]]))
 
 ; Funciones / Componentes General:
 
@@ -24,12 +28,17 @@
    (href "/create-rr") "Nuevo"])
 
 (defn editar-registro []
-  [:a.btn.btn-sm.btn-success.pull-right
+  [:a.btn.btn-md.btn-success.pull-right
    (href "/edit-rr") "Editar"])
 
+(defn btn-planes []
+      [:a.btn.btn-md.btn-info.pull-right
+       (href "/planes") "Planes"])
+
 (defn eliminar-rr-group []
-  [:a.btn.btn-sm.btn-danger.pull-right
-   (href "/delete-group") "Eliminar"])
+      [:a.btn.btn-sm.btn-danger.pull-right
+       (href "/delete-group") "Eliminar"])
+
 
 ; Fin Funciones / Componentes General------------------------------------------------------------------------------------------------------------------
 
@@ -114,6 +123,24 @@
 
 
 
+(defn field-group-select-tratamiento [label cursor type cc placeholder]
+      [bs/FormGroup
+       [bs/ControlLabel
+        {:class "col-sm-12"}
+        label]
+       [:div.col-sm-12
+        [bs/FormControl
+         {:type        type
+          :componentClass cc
+          :on-change   #(reset! cursor (-> % .-target .-value))
+          :placeholder placeholder}
+         [:option (or @cursor "")]
+         [:option "Evitar"]
+         [:option "Aceptar"]
+         [:option "Transferir"]
+         [:option "Mitigar"]
+         ] ]])
+
 (defn field-group-select-estatus [label cursor type cc placeholder]
   [bs/FormGroup
    [bs/ControlLabel
@@ -127,8 +154,10 @@
       :placeholder placeholder}
      [:option (or @cursor "")]
      [:option "Abierto"]
-     [:option "En curso"]
-     [:option "Cerrado"]] ]])
+     [:option "En ejecución"]
+     [:option "Cerrado"]
+     [:option "No iniciado"]
+     ] ]])
 
 (defn field-group-select-tecnica [label cursor type cc placeholder]
   [bs/FormGroup
@@ -142,9 +171,39 @@
       :on-change   #(reset! cursor (-> % .-target .-value))
       :placeholder placeholder}
      [:option (or @cursor "")]
-     [:option "A"]
-     [:option "B"]
-     [:option "C"]] ]])
+     [:option "Brainstorming"]
+     [:option "Structured or semi-structured interviews "]
+     [:option "Delphi  "]
+     [:option "Check-lists"]
+     [:option "Primary hazard analysis"]
+     [:option "Hazard and operability studies (HAZOP)"]
+     [:option "Hazard Analysis and Critical Control Points (HACCP)"]
+     [:option "Environmental risk assessment "]
+     [:option "Structure « What if? » (SWIFT) "]
+     [:option "Scenario analysis "]
+     [:option "Business impact analysis "]
+     [:option "Root cause analysis "]
+     [:option "Failure mode effect analysis "]
+     [:option "Fault tree analysis "]
+     [:option "Event tree analysis "]
+     [:option "Cause and consequence analysis"]
+     [:option "Cause-and-effect analysis"]
+     [:option "Layer protection analysis (LOPA) "]
+     [:option "Decision tree "]
+     [:option "Human reliability analysis "]
+     [:option "Bow tie analysis"]
+     [:option "Reliability centred maintenance  "]
+     [:option "Sneak circuit analysis"]
+     [:option "Markov analysis "]
+     [:option "Monte Carlo simulation "]
+     [:option "Bayesian statistics and Bayes Nets"]
+     [:option "FN curves "]
+     [:option "Risk indices "]
+     [:option "Consequence/probability matrix "]
+     [:option "Cost/benefit analysis"]
+     [:option "Multi-criteria decision analysis\n(MCDA)"]
+
+     ] ]])
 
 ; Verifica que el atomo local no este vacio
 (defn rr-empty? [rr]
@@ -161,60 +220,64 @@
 
 
 ; Verifica que el atomo tenga la información actualizada
-(defn rr-updated? [original-rr edited-rr]
-  (if (:id-risk-register edited-rr)
-    (not= (select-rr-keys original-rr)
-          (select-rr-keys edited-rr))
-    (not (rr-empty? edited-rr))))
+;(defn rr-updated? [original-rr edited-rr]
+;  (if (:id-risk-register edited-rr)
+;    (not= (select-rr-keys original-rr)
+;          (select-rr-keys edited-rr))
+;    (not (rr-empty? edited-rr))))
 ; Componentes:
 ; Botones:
 ; Salvar y Cancelar
 
-(defn control-buttons [original-rr edited-rr]
-  (r/with-let [rr-id      (:id-risk-register @edited-rr)
-               errors        (r/atom nil)
-               confirm-open? (r/atom false)
-               cancel-edit   #(navigate!
-                                (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
-              [:div.row>div.col-sm-12
-               [confirm-modal
-                "Deshacer los cambios?"
-                confirm-open?
-                cancel-edit
-                "Descartar"]
-               [validation-modal errors]
-               [:div.btn-toolbar.pull-right
-                [bs/Button
-                 {:bs-style "warning"
-                  :on-click #(if (rr-updated? @original-rr @edited-rr)
-                               (reset! confirm-open? true)
-                               (cancel-edit))}
-                 "Cancel"]
-                [bs/Button
-                 {:bs-style   "success"
-                  :pull-right true
-                  :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
-                                 (prepare-register @edited-rr)
-                                 (if rr-id
-                                   (dispatch [:save-risk-register @edited-rr])
-                                   (dispatch [:create-risk-register @edited-rr])))}
-                 "Guardar"]]]))
+;(defn control-buttons [original-rr edited-rr]
+;  (r/with-let [rr-id      (:id-risk-register @edited-rr)
+;               errors        (r/atom nil)
+;               confirm-open? (r/atom false)
+;               cancel-edit   #(navigate!
+;                                (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
+;              [:div.row>div.col-sm-12
+;               [confirm-modal
+;                "Deshacer los cambios?"
+;                confirm-open?
+;                cancel-edit
+;                "Descartar"]
+;               [validation-modal errors]
+;               [:div.btn-toolbar.pull-right
+;                [bs/Button
+;                 {:bs-style "warning"
+;                  :on-click #(if (rr-updated? @original-rr @edited-rr)
+;                               (reset! confirm-open? true)
+;                               (cancel-edit))}
+;                 "Cancel"]
+;                [bs/Button
+;                 {:bs-style   "success"
+;                  :pull-right true
+;                  :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
+;                                 (prepare-register @edited-rr)
+;                                 (if rr-id
+;                                   (dispatch [:save-risk-register @edited-rr])
+;                                   (dispatch [:create-risk-register @edited-rr])))}
+;                 "Guardar"]]]))
 
-(defn calcular-vri [probabilidad impacto]
-   (if (and (empty? probabilidad) (empty? impacto))
-     [:h1.risk-title "Valor no calculado"]
-     [:h1.risk-title (* probabilidad impacto)]
-     )
-  )
 
-; Página:
-;incompleto
+
+
 (defn edit-risk-register-page []
       (r/with-let [ estado1 (r/atom false)
                estado2 (r/atom false)
                estado3 (r/atom false)
                estado4 (r/atom false)
                estado5 (r/atom false)
+                   dateii (r/atom (now))
+                   datefi (r/atom (now))
+                   dateia (r/atom (now))
+                   datefa (r/atom (now))
+                   dateie (r/atom (now))
+                   datefe (r/atom (now))
+                   dateit (r/atom (now))
+                   dateft (r/atom (now))
+                   dateim (r/atom (now))
+                   datefm (r/atom (now))
                original-rr  (subscribe [:risk-register])
                edited-rr   (-> @original-rr
                                (update :id-risk #(or % ""))
@@ -226,7 +289,7 @@
                                (update :efect-risk-register #(or % ""))
                                (update :location-risk-register #(or % ""))
                                (update :id-treatment #(or % ""))
-                               (update :key-risk-register #(or % ""))
+                               (update :key-risk-register boolean)
                                (update :likelihood-risk-register #(or % nill))
                                (update :impact-risk-register #(or % nill))
                                (update :inherent-risk-register #(or % nill))
@@ -301,8 +364,82 @@
 
                ]
 
+                  (defn select-rr-keys [rr]
+                        (let [rr-keys [:id-risk-register
+                                       :id-risk
+                                       :id-risk-subtype
+                                       :id-campaign
+                                       :status-risk-register
+                                       :owner-risk-register
+                                       :description-risk-register
+                                       :efect-risk-register
+                                       :location-risk-register
+                                       :id-treatment
+                                       :key-risk-register
+                                       :likelihood-risk-register
+                                       :impact-risk-register
+                                       :inherent-risk-register
+                                       :current-risk-register
+                                       :ecd-risk-register
+                                       :ece-risk-register
+                                       :residual-risk-register
+                                       :startdate-identificacion
+                                       :enddate-identificacion
+                                       :technique-identificacion
+                                       :status-identificacion
+                                       :startdate-analisis
+                                       :enddate-analisis
+                                       :technique-analisis
+                                       :status-analisis
+                                       :startdate-evaluacion
+                                       :enddate-evaluacion
+                                       :technique-evaluacion
+                                       :status-evaluacion
+                                       :startdate-tratamiento
+                                       :enddate-tratamiento
+                                       :technique-tratamiento
+                                       :status-tratamiento
+                                       :startdate-monitoreo
+                                       :enddate-monitoreo
+                                       :technique-monitoreo
+                                       :status-monitoreo
+                                       :kri-risk-register-title
+                                       :kri-risk-register-descritpion
+                                       ]]
+                             ))
+                  (defn rr-empty? [rr]
+                        (->> rr
+                             (keep #(-> % second not-empty))
+                             (empty?)))
+
+                  (defn rr-updated? [original-rr edited-rr]
+                        (if (:id-risk-register edited-rr)
+                          (not= (select-rr-keys original-rr)
+                                (select-rr-keys edited-rr))
+                          (not (rr-empty? edited-rr))))
+
+                  (defn- date->string
+                         [date]
+                         (if (instance? js/goog.date.Date date)
+                           (unparse (formatter "dd MMM, yyyy") date)
+                           ""))
+
               (def valor
                 (*(:likelihood-risk-register @edited-rr)(:impact-risk-register @edited-rr)))
+
+                  (defn field-group-numbers2 [label cursor type placeholder]
+                        [bs/FormGroup
+                         [bs/ControlLabel
+                          {:class "col-sm-12"}
+                          label]
+                         [:div.col-sm-12
+                          [bs/FormControl
+                           {:type        type
+                            :value       (or @cursor nill)
+                            :on-change   #(do  (swap! edited-rr assoc :inherent-risk-register valor)
+                                                (reset! cursor (js/parseFloat(-> % .-target .-value)) )
+                                               )
+                            :placeholder placeholder}]]])
 
                   (defn control-buttons [original-rr edited-rr]
                         (r/with-let [rr-id      (:id-risk-register @edited-rr)
@@ -311,16 +448,11 @@
                                      cancel-edit   #(navigate!
                                                       (if rr-id (str "/riskregister/" rr-id) "/riskregister"))]
                                     [:div.row>div.col-sm-12
-                                     [confirm-modal
-                                      "Deshacer los cambios?"
-                                      confirm-open?
-                                      cancel-edit
-                                      "Descartar"]
                                      [validation-modal errors]
                                      [:div.btn-toolbar.pull-right
                                       [bs/Button
                                        {:bs-style "warning"
-                                        :on-click #(if (rr-updated? @original-rr @edited-rr)
+                                        :on-click #(do
                                                      (reset! confirm-open? true)
                                                      (cancel-edit))}
                                        "Cancel"]
@@ -329,8 +461,12 @@
                                         :pull-right true
                                         :on-click   #(when-not (reset! errors (v/validate-create @edited-rr))
                                                                (if rr-id
-                                                                 (dispatch [:save-risk-register @edited-rr])
-                                                                 (dispatch [:create-risk-register @edited-rr])))}
+                                                                 (do (swap! edited-rr assoc :inherent-risk-register valor)
+                                                                     (dispatch [:save-risk-register @edited-rr]))
+                                                                 (do (swap! edited-rr assoc :inherent-risk-register valor)
+                                                                   (dispatch [:create-risk-register @edited-rr])
+                                                                     (navigate! "/riskregister"))
+                                                                 ))}
                                        "Guardar"]]]))
 
               [:div.container
@@ -351,12 +487,19 @@
                    :placeholder "Nombre que describe el riesgo"
                    :on-change #(reset! descripcion %)]]
                  [bs/FormGroup
-                  [bs/ControlLabel "Riesgo:"]
+                  [bs/ControlLabel "Tipo:"]
                   [input-text
                    :model tipo
                    :width "100%"
-                   :placeholder "Nombra riesgo padre"
+                   :placeholder "Nombra tipo de riesgo"
                    :on-change #(reset! tipo %)]]
+                 [bs/FormGroup
+                  [bs/ControlLabel "Riesgo:"]
+                  [input-text
+                   :model riesgo
+                   :width "100%"
+                   :placeholder "Nombra riesgo padre"
+                   :on-change #(reset! riesgo %)]]
                  ] [:div.col-sm-6
                     [bs/FormGroup
                      [bs/ControlLabel "Propietario del riesgo:"]
@@ -373,16 +516,13 @@
                       :width "100%"
                       :placeholder "Nombra la Campaña"
                       :on-change #(reset! campana %)]]
-                    [bs/FormGroup
-                     [bs/ControlLabel "Estatus del riesgo:"]
-                     [input-text
-                      :model estatus
-                      :width "100%"
-                      :placeholder "Nombra el estatus del riesgo"
-                      :on-change #(reset! estatus %)]]
+                      [field-group-select-estatus
+                       "Estatus de la fase de analisis"
+                       estatus
+                       :text
+                       :select "Selecciona el estatus"]
                     ]
                 ]
-
 
 
                           [:br][:div.row [:div.col-sm-12 [bs/Button
@@ -390,7 +530,6 @@
                                                            :on-click #(swap! estado1 not)}
                                                           "Identifiacion"
                                                            ]]]
-
 
                           [bs/Collapse {:in @estado1 }
                            [:div.row
@@ -407,14 +546,26 @@
                               :select "Seleciona la tecnica"]
                              ]
                             [:div.col-sm-6
+
                              [bs/FormGroup
                               [:label "Fecha de inicio de la identificación"]
                               [:p (:startdate-identificacion @original-rr)]
-                              [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaII  %)}]
-                              [:label "Fecha de Finalización de la identificación"]
+                              [datepicker-dropdown
+                               :model dateii
+                               :on-change #(do (reset! dateii % )
+                                               (reset! fechaII (date->string %) ) )
+                               ]]]
+
+                              [:div.col-sm-6
+                               [:label "Fecha de Finalización de la identificación"]
                               [:p (:enddate-identificacion @original-rr)]
-                              [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaSI %)}]
+                              [datepicker-dropdown
+                               :model datefi
+                               :on-change #(do (reset! datefi % )
+                                               (reset! fechaSI (date->string %) ) )
                                ]
+
+
                              [control-buttons original-rr edited-rr]]
                             ]
                            ]
@@ -434,7 +585,7 @@
                                                                :model efecto
                                                                :width "100%"
                                                                :class "edit-issue-title"
-                                                               :placeholder "Nombre que describe el riesgo"
+                                                               :placeholder "Efecto del riesgo"
                                                                :on-change #(reset! efecto %)]]]
                                              [:div.col-sm-6
                                               [field-group-select-estatus
@@ -446,7 +597,7 @@
                                                "Tecnica para la analisis"
                                                tecnicaA
                                                :text
-                                               :select "Seleciona la tecnica de evalua"]
+                                               :select "Seleciona la tecnica "]
 
                                               [field-group-numbers
                                                "Probabilidad del Riesgo"
@@ -465,15 +616,27 @@
                                                 :width "100%"
                                                 :class "edit-issue-title"
                                                 :placeholder "Describa la ubicacion del riesgo"
-                                                :on-change #(reset! ubicacion %)]]
-                                              [bs/FormGroup
-                                               [:label "Fecha de inicio de la evaluación"]
-                                               [:p (:startdate-analisis @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaIA  %)}]
-                                               [:label "Fecha de Finalización de la evaluación"]
+                                                :on-change #(reset! ubicacion %)]]]
+                                              [:div.col-sm-5
+
+                                               [bs/FormGroup
+                                                [:label "Fecha de inicio del analisis "]
+                                                [:p (:startdate-analisis @original-rr)]
+                                                [datepicker-dropdown
+                                                 :model dateia
+                                                 :on-change #(do (reset! dateia % )
+                                                                 (reset! fechaIA (date->string %) ) )
+                                                 ]]]
+
+                                              [:div.col-sm-5
+                                               [:label "Fecha de Finalización del analisis"]
                                                [:p (:enddate-analisis @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaSA %)}]
-                                               ] [control-buttons original-rr edited-rr]]
+                                               [datepicker-dropdown
+                                                :model datefa
+                                                :on-change #(do (reset! datefa % )
+                                                                (reset! fechaSA (date->string %) ) )
+                                                ]
+                                               [control-buttons original-rr edited-rr]]
 
                                               ]]
 
@@ -504,18 +667,11 @@
                                                [bs/FormGroup
                                                 [bs/ControlLabel
                                                  {:class "col-sm-12"}
-                                                 "Riesgo inherente"]
-                                                [:div.col-sm-12
-                                                 [bs/FormControl
-                                                  {:type   :number
-                                                   :value valor
-                                                   :model iherente
-                                                   :change-on-blur? false
-                                                   :on-changes #(swap! edited-rr assoc :inherent-risk-register valor)
-                                                   :placeholder ""}]
-                                                 ]]
-
-
+                                                 "Valor de riesgo inherente"]
+                                                [bs/ControlLabel
+                                                 {:class "col-sm-12"}
+                                                 valor]
+                                                ]
                                                ]
                                               ]
                                              [:div.col-sm-6
@@ -524,16 +680,32 @@
                                                 "Eficiencia controles (ECE)"
                                                 ece
                                                 :number "Introduzca el valor del ECE"]
+                                               ]
+                                              ]
+                                             [:div.col-sm-6
+                                              [bs/FormGroup
                                                [:label "Fecha de inicio de la evaluación"]
                                                [:p (:startdate-evaluacion @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaIE  %)}]
-                                               [:label "Fecha de Finalización de la evaluación"]
-                                               [:p (:enddate-evaluacion @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaSE %)}]
+                                               [datepicker-dropdown
+                                                :model dateie
+                                                :on-change #(do (reset! dateie % )
+                                                                (reset! fechaIE (date->string %) ) )
+                                                ]]]
+
+                                             [:div.col-sm-6
+                                              [:label "Fecha de Finalización de evaluación"]
+                                              [:p (:enddate-evaluacion @original-rr)]
+                                              [datepicker-dropdown
+                                               :model datefe
+                                               :on-change #(do (reset! datefe % )
+                                                               (reset! fechaSE (date->string %) ) )
+                                               ]
+                                              [bs/FormGroup
                                                [bs/Checkbox
                                                 {:checked   (boolean (:key-risk-register @edited-rr))
                                                  :on-change #(swap! edited-rr update :key-risk-register not)}
-                                                "Riesgo clave"] [control-buttons original-rr edited-rr]] ]
+                                                "Riesgo clave"]][control-buttons original-rr edited-rr]]
+
                                              ]  ]
 
 
@@ -556,34 +728,44 @@
                                                 tecnicaT
                                                 :text
                                                 :select "Seleciona la tecnica a utilizar"]
-                                               [field-group
+                                               [field-group-numbers
                                                 "Eficiencia controles diseñado(ECD)"
                                                 ecd
-                                                :text "Introduzca el valor del ECD"]
-                                               [field-group
+                                                :number "Introduzca el valor del ECD"]
+                                               [field-group-numbers
                                                 "Riesgo residual"
                                                 residual
-                                                :text "Introduzca el valor del riesgo residual"]
+                                                :number "Introduzca el valor del riesgo residual"]
                                                ]
                                               ]
                                              [:div.col-sm-6
                                               [bs/FormGroup
-                                               [bs/FormGroup
-                                                [bs/ControlLabel "Tratamiento:"]
-                                                [input-text
-                                                 :model tratamiento
-                                                 :width "100%"
-                                                 :class "edit-issue-title"
-                                                 :placeholder "Nombre que describe el riesgo"
-                                                 :on-change #(reset! tratamiento %)]]
-                                               [:label "Fecha de inicio de la evaluación"]
+                                               [field-group-select-tratamiento
+                                                "Indique el tratamiento"
+                                                tratamiento
+                                                :text
+                                                :select "Seleciona el tratamiento"]
+                                                ]]
+                                             [:div.col-sm-6
+                                              [bs/FormGroup
+                                               [:label "Fecha de inicio del tratamiento"]
                                                [:p (:startdate-tratamiento @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaIT  %)}]
-                                               [:label "Fecha de Finalización de la evaluación"]
-                                               [:p (:enddate-tratamiento @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText ""  :onChange #(reset! fechaST %)
-                                                                  }]
-                                                ] [control-buttons original-rr edited-rr] ]
+                                               [datepicker-dropdown
+                                                :model dateit
+                                                :on-change #(do (reset! dateit % )
+                                                                (reset! fechaIT (date->string %) ) )
+                                                ]]]
+
+                                             [:div.col-sm-6
+                                              [:label "Fecha de Finalización del tratamiento"]
+                                              [:p (:enddate-tratamiento @original-rr)]
+                                              [datepicker-dropdown
+                                               :model dateft
+                                               :on-change #(do (reset! dateft % )
+                                                               (reset! fechaST (date->string %) ) )
+                                               ]
+                                              [control-buttons original-rr edited-rr]]
+
                                              ]  ]
 
 
@@ -622,18 +804,28 @@
                                                 "Tecnica para el monitoreo"
                                                 tecnicaM
                                                 :text
-                                                :select "Seleciona la tecnica de evalua"]
+                                                :select "Seleciona la tecnica de monitoreo"]
                                                ]
                                               ]
                                              [:div.col-sm-6
                                               [bs/FormGroup
-                                               [:label "Fecha de inicio de la evaluación"]
+                                               [:label "Fecha de inicio del monitoreo"]
                                                [:p (:startdate-monitoreo @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaIM  %)}]
-                                               [:label "Fecha de Finalización de la evaluación"]
-                                               [:p (:enddate-monitoreo @original-rr)]
-                                               [bs/DateTimeField {:input-format "dddd, MMMM D YYYY, h:mm:ss a" :defaultText "" :onChange #(reset! fechaSM %)}]
-                                                ] [control-buttons original-rr edited-rr]]
+                                               [datepicker-dropdown
+                                                :model dateim
+                                                :on-change #(do (reset! dateim % )
+                                                                (reset! fechaIM (date->string %) ) )
+                                                ]]]
+
+                                             [:div.col-sm-6
+                                              [:label "Fecha de Finalización del monitoreo"]
+                                              [:p (:enddate-monitoreo @original-rr)]
+                                              [datepicker-dropdown
+                                               :model datefm
+                                               :on-change #(do (reset! datefm % )
+                                                               (reset! fechaSM (date->string %) ) )
+                                               ]
+                                              [control-buttons original-rr edited-rr]]
                                              ]  ]
                ]
 
@@ -720,7 +912,7 @@
      ::dt/render-fn    rating-formatter}
      ]
    {::dt/pagination    {::dt/enabled? true
-                        ::dt/per-page 10}
+                        ::dt/per-page 5}
     ::dt/table-classes [ "table-striped" "table-bordered" "table-hover" "table"],
     ::dt/selection {::dt/enabled? true}}]
   )
@@ -816,21 +1008,33 @@
 ; Risk Register Detail
 ; Define la función de renderización de la tabla re-frame. Se incluyen:
 
+(defn delete-rr-button [{:keys [id-risk-register]}]
+      (r/with-let [confirm-open? (r/atom false)]
+                  [bs/Button
+                   {:bs-style "danger"
+                    :on-click #(reset! confirm-open? true)}
+                   "Eliminar"
+                   [confirm-modal
+                    "Seguro desea eliminar el Plan?"
+                    confirm-open?
+                    #(dispatch [:delete-risk-register id-risk-register])
+                    "Eliminar"]]))
+
 (defn pintar-circulo [risk-registers]
   [:div
    (if (or (= (:impact-risk-register rg) nil) (= (:likelihood-risk-register rg) nil))
      (for [rg risk-registers]
-       [:h1 [:svg.heat-map
+          [:svg.heat-map {:xmlns "http://www.w3.org/2000/svg"}
 
-             [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "red"]
+           [componente (:impact-risk-register rg) (:likelihood-risk-register rg) "blue"]
 
-             ]]
+           ]
        )
      [componente 10000 10000 "yellow"])
    ])
 
 
-(defn componente [x y color] [:circle {:fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))}])
+(defn componente [x y color] [:circle {  :fill color :stroke "black" :r 30 :cx (* x 100) :cy (- 500 (* y 100))} ])
 
 
 
@@ -924,7 +1128,7 @@
               [:div.container
                [:div.rounded-panel
                [:div.row
-                [:div.col-sm-12 [:h3.risk-title  "Detalle de riesgo"]]]
+                [:div.col-sm-12 [:h3.risk-title  "Detalle de riesgo"] ]]
                [:div.row
                  [:div.col-sm-6
                   [:h4 (:description-risk-register @rr)]
@@ -949,7 +1153,7 @@
                  ] ]
 
 
-               [:br] [:div.row [:div.col-sm-12 [:div.btn-toolbar.pull-right  [editar-registro] ]]]
+               [:br] [:div.row [:div.col-sm-12 [:div.btn-toolbar.pull-right   [delete-rr-button @rr][editar-registro][btn-planes] ]]]
                [:br][:div.row [:div.col-sm-12 [bs/Button
                                                {:bs-style "link"
                                                 :on-click #(swap! estado1 not)}
@@ -1011,8 +1215,8 @@
                                                [:label "Técnica : "] [:p (:technique-evaluacion @rr)]
                                                [:label "Estatus: "] [:p (:status-evaluacion @rr) ]
                                                [bs/Checkbox
-                                                {:checked   (boolean (:keyrisk-risk-register @rr))}
-                                                "Reisgo Clave"]
+                                                {:checked   (boolean (:key-risk-register @rr))}
+                                                "Riesgo Clave"]
                                                ]
                                               [:div.col-sm-4
                                                   [:label "Fecha de inicio: "] [:p (:startdate-evaluacion @rr)]
@@ -1065,7 +1269,7 @@
                                                [:label "Fecha de finalización: "] [:p (:enddate-monitoreo @rr) ]
                                                ]
                                               ]]  ]
-               [:div.btn-toolbar.pull-right   [editar-registro] ] ]
+               [:div.btn-toolbar.pull-right    [delete-rr-button @rr] [editar-registro][btn-planes] ] ]
 
 
 

@@ -23,7 +23,7 @@
              :handler       #(let [user (:user %)]
                               (on-close)
                               (dispatch [:login user])
-                              (dispatch [:set-active-page :home]))}))))
+                              (dispatch [:set-active-page :risk-register-sumary]))}))))
 
 (defn login-page []
   (r/with-let [user      (subscribe [:user])

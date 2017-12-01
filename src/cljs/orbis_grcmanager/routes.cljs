@@ -28,8 +28,15 @@
   (.scrollTo js/window 0 0)
   (run-events (into
                 [[:load-tags]
-                 [:set-active-page :home]]
+                 [:set-active-page :risk-register-sumary]]
                 events)))
+
+(defn home-page-events2 [& events]
+      (.scrollTo js/window 0 0)
+      (run-events (into
+                    [[:load-tags]
+                     [:set-active-page :home]]
+                    events)))
 
 
 
@@ -46,25 +53,31 @@
 ;; Routes
 (secretary/defroute (context-url "/") []
   (home-page-events [:select-tag "Recent"]
-                    [:load-recent-issues]))
+                    [:load-risk-register-sumary]
+                    ;[:load-recent-issues]
+                    ))
+(secretary/defroute (context-url "/planes") []
+                    (home-page-events2 [:select-tag "Recent"]
+                                       [:load-recent-issues]
+                                      ))
 
 (secretary/defroute (context-url "/search/:query") [query]
-  (home-page-events [:search-for-issues query]))
+  (home-page-events2 [:search-for-issues query]))
 
 (secretary/defroute (context-url "/all-issues") []
   (home-page-events [:select-tag "All"]
                     [:load-all-issues]))
 
 (secretary/defroute (context-url "/recent-issues") []
-  (home-page-events [:select-tag "Recent"]
+  (home-page-events2 [:select-tag "Recent"]
                     [:load-recent-issues]))
 
 (secretary/defroute (context-url "/most-viewed-issues") []
-  (home-page-events [:select-tag "Most Viewed"]
+  (home-page-events2 [:select-tag "Most Viewed"]
                     [:load-most-viewed-issues]))
 
 (secretary/defroute (context-url "/issues/:tag") [tag]
-  (home-page-events [:select-tag tag]
+  (home-page-events2 [:select-tag tag]
                     [:load-issues-for-tag tag]))
 
 (secretary/defroute (context-url "/create-issue") []

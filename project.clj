@@ -34,6 +34,7 @@
                  [org.webjars/font-awesome "4.7.0"]
                  [org.webjars/webjars-locator-jboss-vfs "0.1.0"]
                  [postgresql "9.3-1102.jdbc41"]
+                 [clj-time "0.14.2"]
                  [re-com "2.1.0"]
                  [re-frame "0.9.4"]
                  [re-frisk "0.5.0"]
