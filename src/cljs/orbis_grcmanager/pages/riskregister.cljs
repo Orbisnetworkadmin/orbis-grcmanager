@@ -994,11 +994,11 @@
                     [:h2 "Risk Register"]
                     [buscar-risk-register]]
                   [:div.col-sm-12 [:div.panel.panel-default [tabla-reframe] [control-paginacion] [selector-por-pagina]]
-                  [selected-rows-preview]
+                   ;[selected-rows-preview]
                    [:div.btn-toolbar.pull-right        [nuevo-rr] [eliminar-rr-group]]]]]
               ))
 
-; Fin Risk Register Sumary---------------------------------------------------------------------------------------------------------------------
+; Fin Risk Register Summary---------------------------------------------------------------------------------------------------------------------
 
 
 
